@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "634120652466",
+    "project_id": "gezginrotasi-788b6",
+    "storage_bucket": "gezginrotasi-788b6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:634120652466:android:cbbd62be3a41c111b3ebab",
+        "android_client_info": {
+          "package_name": "com.companyname.GezginRotasi2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3rVeg9ydiWRI62bUh9iK9AXXlcMAh3kA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
