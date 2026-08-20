@@ -4,32 +4,42 @@ namespace GezginRotası2;
 
 public class DatabaseService
 {
-    private SQLiteAsyncConnection _database;
+    private SQLiteAsyncConnection? _database;
 
-    async Task Init()
+    private async Task Init()
     {
         if (_database is not null) return;
 
-        // Telefonun içinde güvenli bir dosya yolu oluşturur
         var dbPath = Path.Combine(FileSystem.AppDataDirectory, "GezginYedek.db3");
         _database = new SQLiteAsyncConnection(dbPath);
-
-        // 'Place' tablosunu (şemasını) oluşturur
         await _database.CreateTableAsync<Place>();
     }
 
-    // Firebase'den gelen verileri telefona "yedeklemek" için
     public async Task SavePlacesAsync(List<Place> places)
     {
         await Init();
-        await _database.DeleteAllAsync<Place>(); // Eskileri temizle
-        await _database.InsertAllAsync(places);  // Yenileri kaydet
+        // Tüm şehri silmek yerine yeni gelen mekanları veritabanına ekle
+        await _database!.InsertAllAsync(places);
     }
 
-    // İnternet yoksa devreye giren kahraman metod
     public async Task<List<Place>> GetLocalPlacesAsync()
     {
         await Init();
-        return await _database.Table<Place>().ToListAsync();
+        return await _database!.Table<Place>().ToListAsync();
+    }
+
+    public async Task<List<Place>> GetFilteredPlacesAsync(string city, string category)
+    {
+        await Init();
+
+        var query = _database!.Table<Place>();
+
+        if (city != "Tüm Türkiye")
+            query = query.Where(x => x.Location == city);
+
+        if (!string.IsNullOrEmpty(category))
+            query = query.Where(x => x.Category == category);
+
+        return await query.ToListAsync();
     }
 }

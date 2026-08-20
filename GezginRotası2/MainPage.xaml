@@ -6,16 +6,19 @@
              BackgroundColor="Black">
 
     <Grid>
+        <!-- Arka Plan Görseli -->
         <Image Source="https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?q=80&amp;w=2071&amp;auto=format&amp;fit=crop"
                Aspect="AspectFill"
                HorizontalOptions="Fill"
                VerticalOptions="Fill" />
 
+        <!-- Arka Plan Karartma Katmanı -->
         <BoxView Color="#90000000" />
 
         <ScrollView>
-            <VerticalStackLayout Spacing="25" Padding="30,60,30,30">
+            <VerticalStackLayout Spacing="20" Padding="25,50,25,30">
 
+                <!-- Başlıklar -->
                 <Label Text="Gezginin Rotası"
                        TextColor="White"
                        FontSize="32"
@@ -26,8 +29,9 @@
                        TextColor="#CCCCCC"
                        FontSize="16"
                        HorizontalOptions="Center"
-                       Margin="0,-15,0,0" />
+                       Margin="0,-12,0,0" />
 
+                <!-- Arama Çubuğu -->
                 <Frame BackgroundColor="White" 
                        Padding="2" 
                        CornerRadius="20" 
@@ -35,39 +39,77 @@
                     <SearchBar Placeholder="Nereye gitmek istersiniz?" 
                                PlaceholderColor="Gray"
                                TextColor="Black"
-                               BackgroundColor="Transparent" 
-/>
+                               BackgroundColor="Transparent" />
                 </Frame>
 
+                <!-- Şehir Seçim Menüsü (Picker) -->
                 <Frame BackgroundColor="#40FFFFFF" 
-       CornerRadius="15" 
-       Padding="10,0"
-       HasShadow="False">
+                       CornerRadius="15" 
+                       Padding="10,0"
+                       HasShadow="False">
                     <Picker x:Name="CityPicker"
-            Title="📍 Gezeceğiniz Şehri Seçin"
-            TitleColor="White"
-            TextColor="White"
-            HorizontalOptions="Center">
-                        <Picker.ItemsSource>
-                            <x:Array Type="{x:Type x:String}">
-                                <x:String>Tüm Türkiye</x:String>
-                                <x:String>Kayseri</x:String>
-                                <x:String>İstanbul</x:String>
-                                <x:String>Nevşehir</x:String>
-                                <x:String>Ankara</x:String>
-                            </x:Array>
-                        </Picker.ItemsSource>
-                    </Picker>
+                            Title="📍 Gezeceğiniz Şehri Seçin"
+                            TitleColor="White"
+                            TextColor="White"
+                            HorizontalOptions="Center" />
                 </Frame>
 
+                <!-- 🤖 GEMINI YAPAY ZEKA ASİSTANI KARTI -->
+                <Border BackgroundColor="#E61E1E1E"
+                        Stroke="#FF7F00"
+                        StrokeThickness="1.5"
+                        StrokeShape="RoundRectangle 16"
+                        Margin="0,5,0,5"
+                        Padding="16"
+                        HorizontalOptions="Fill">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnAiAssistantClicked" />
+                    </Border.GestureRecognizers>
+
+                    <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="12" VerticalOptions="Center">
+                        <!-- Robot İkonu -->
+                        <Border Grid.Column="0" 
+                                BackgroundColor="#FF7F00" 
+                                StrokeShape="RoundRectangle 24" 
+                                WidthRequest="48" 
+                                HeightRequest="48" 
+                                StrokeThickness="0">
+                            <Label Text="🤖" FontSize="24" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+
+                        <!-- Açıklama Metinleri -->
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                            <Label Text="Yapay Zeka Gezgin Asistanı" 
+                                   TextColor="White" 
+                                   FontAttributes="Bold" 
+                                   FontSize="15"/>
+                            <Label Text="Rota çiz, ne yenir sor veya bütçe planla!" 
+                                   TextColor="#CCCCCC" 
+                                   FontSize="12"/>
+                        </VerticalStackLayout>
+
+                        <!-- Ok İşareti -->
+                        <Label Grid.Column="2" 
+                               Text="➔" 
+                               TextColor="#FF7F00" 
+                               FontSize="20" 
+                               FontAttributes="Bold" 
+                               VerticalOptions="Center"/>
+                    </Grid>
+                </Border>
+
+                <!-- 4 Ana Kategori Butonları -->
                 <Grid ColumnDefinitions="*,*" 
                       RowDefinitions="Auto,Auto" 
                       ColumnSpacing="15" 
                       RowSpacing="15">
 
+                    <!-- 1. Gezilecek Yerler Butonu -->
                     <Frame Grid.Row="0" Grid.Column="0" 
-                           BackgroundColor="#CCFF7F00"
-                           HasShadow="True" CornerRadius="20" Padding="15">
+                           BackgroundColor="#CCFF7F00" 
+                           HasShadow="True" 
+                           CornerRadius="20" 
+                           Padding="15">
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnGezilecekYerlerTapped" />
                         </Frame.GestureRecognizers>
@@ -77,34 +119,80 @@
                         </VerticalStackLayout>
                     </Frame>
 
+                    <!-- 2. Müzeler Butonu -->
                     <Frame Grid.Row="0" Grid.Column="1" 
-                           BackgroundColor="#CC00BCD4"
-                           HasShadow="True" CornerRadius="20" Padding="15">
+                           BackgroundColor="#CC00BCD4" 
+                           HasShadow="True" 
+                           CornerRadius="20" 
+                           Padding="15">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnMuzelerTapped" />
+                        </Frame.GestureRecognizers>
                         <VerticalStackLayout HorizontalOptions="Center" Spacing="5">
                             <Label Text="🏺" FontSize="30" HorizontalOptions="Center"/>
                             <Label Text="Müzeler" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center"/>
                         </VerticalStackLayout>
                     </Frame>
 
+                    <!-- 3. Doğa Butonu -->
                     <Frame Grid.Row="1" Grid.Column="0" 
-                           BackgroundColor="#CC4CAF50"
-                           HasShadow="True" CornerRadius="20" Padding="15">
+                           BackgroundColor="#CC4CAF50" 
+                           HasShadow="True" 
+                           CornerRadius="20" 
+                           Padding="15">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnDogaTapped" />
+                        </Frame.GestureRecognizers>
                         <VerticalStackLayout HorizontalOptions="Center" Spacing="5">
                             <Label Text="🏔️" FontSize="30" HorizontalOptions="Center"/>
                             <Label Text="Doğa" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center"/>
                         </VerticalStackLayout>
                     </Frame>
 
+                    <!-- 4. Ulaşım Butonu -->
                     <Frame Grid.Row="1" Grid.Column="1" 
-                           BackgroundColor="#CC607D8B"
-                           HasShadow="True" CornerRadius="20" Padding="15">
+                           BackgroundColor="#CC607D8B" 
+                           HasShadow="True" 
+                           CornerRadius="20" 
+                           Padding="15">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnUlasimTapped" />
+                        </Frame.GestureRecognizers>
                         <VerticalStackLayout HorizontalOptions="Center" Spacing="5">
                             <Label Text="🚌" FontSize="30" HorizontalOptions="Center"/>
                             <Label Text="Ulaşım" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center"/>
                         </VerticalStackLayout>
                     </Frame>
-
+                    <!-- 5. Meşhur Lezzetler Butonu -->
+                    <Frame Grid.Row="2" Grid.Column="0" 
+       BackgroundColor="#CCE91E63" 
+       HasShadow="True" 
+       CornerRadius="20" 
+       Padding="15">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnLezzetlerTapped" />
+                        </Frame.GestureRecognizers>
+                        <VerticalStackLayout HorizontalOptions="Center" Spacing="5">
+                            <Label Text="🍲" FontSize="30" HorizontalOptions="Center"/>
+                            <Label Text="Ne Yenir?" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                    </Frame>
+                    <!-- 6. Gezgin Pasaportu Butonu -->
+                    <Frame Grid.Row="2" Grid.Column="1" 
+       BackgroundColor="#CC9C27B0" 
+       HasShadow="True" 
+       CornerRadius="20" 
+       Padding="15">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnPasaportTapped" />
+                        </Frame.GestureRecognizers>
+                        <VerticalStackLayout HorizontalOptions="Center" Spacing="5">
+                            <Label Text="🇹🇷" FontSize="30" HorizontalOptions="Center"/>
+                            <Label Text="Pasaportum" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                    </Frame>
                 </Grid>
+                
 
             </VerticalStackLayout>
         </ScrollView>

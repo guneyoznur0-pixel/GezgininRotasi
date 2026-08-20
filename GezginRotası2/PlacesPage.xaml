@@ -1,34 +1,20 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:GezginRotası2"
              x:Class="GezginRotası2.PlacesPage"
-             BackgroundColor="White"
-             Title="Mekan Detayları">
+             BackgroundColor="#121212">
 
-    <Grid BackgroundColor="#F5F5F5">
-        <CollectionView x:Name="PlacesCollection" 
-                SelectionMode="Single"
-                SelectionChanged="OnPlaceSelected">
-            <CollectionView.ItemsLayout>
-                <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
-            </CollectionView.ItemsLayout>
+    <CollectionView x:Name="PlacesCollection"
+                    SelectionMode="Single"
+                    SelectionChanged="OnPlaceSelected">
+        <CollectionView.ItemTemplate>
+            <DataTemplate x:DataType="local:Place">
+                <Grid Padding="15">
+                    <Label Text="{Binding Name}" TextColor="White" FontSize="18" />
+                </Grid>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
 
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame CornerRadius="15" HasShadow="True" Padding="10" Margin="5" BackgroundColor="White">
-                        <HorizontalStackLayout Spacing="15">
-                            <Image Source="{Binding ImageUrl}" 
-                                   WidthRequest="80" HeightRequest="80" 
-                                   Aspect="AspectFill" />
-
-                            <VerticalStackLayout VerticalOptions="Center">
-                                <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="18" TextColor="Black" />
-                                <Label Text="{Binding Location}" FontSize="14" TextColor="Gray" />
-                            </VerticalStackLayout>
-                        </HorizontalStackLayout>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </Grid>
 </ContentPage>
