@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GezginRotası2.AddDiaryPage"
+             Title="✍️ Yeni Gezi Anısı"
+             BackgroundColor="#121212">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="16">
+
+            <!-- Şehir Seçimi -->
+            <VerticalStackLayout Spacing="6">
+                <Label Text="📍 Hangi Şehirdeydin?" TextColor="#FF7F00" FontSize="13" FontAttributes="Bold"/>
+                <Border BackgroundColor="#1E1E1E" Stroke="#333333" StrokeShape="RoundRectangle 12" Padding="12,0">
+                    <Picker x:Name="CityPicker" Title="Şehir Seçin" TextColor="White" TitleColor="#888888"/>
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- Anı Başlığı -->
+            <VerticalStackLayout Spacing="6">
+                <Label Text="🏷️ Anı Başlığı" TextColor="#FF7F00" FontSize="13" FontAttributes="Bold"/>
+                <Border BackgroundColor="#1E1E1E" Stroke="#333333" StrokeShape="RoundRectangle 12" Padding="12,4">
+                    <Entry x:Name="TitleEntry" Placeholder="Örn: Kapadokya Balon Turu..." PlaceholderColor="#777777" TextColor="White"/>
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- Ruh Hali / Emoji -->
+            <VerticalStackLayout Spacing="6">
+                <Label Text="✨ Gezi Hissiyatı (Ruh Hali)" TextColor="#FF7F00" FontSize="13" FontAttributes="Bold"/>
+                <Border BackgroundColor="#1E1E1E" Stroke="#333333" StrokeShape="RoundRectangle 12" Padding="12,0">
+                    <Picker x:Name="MoodPicker" Title="Ruh Hali Seç" TextColor="White" TitleColor="#888888">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>🤩 Harika / Büyüleyici</x:String>
+                                <x:String>🍲 Lezzet Dolu</x:String>
+                                <x:String>🏔️ Maceralı &amp; Doğa</x:String>
+                                <x:String>🏰 Tarih &amp; Kültür</x:String>
+                                <x:String>☕ Sakin &amp; Dinlendirici</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- Anı Detayı -->
+            <VerticalStackLayout Spacing="6">
+                <Label Text="📝 Gezi Notların &amp; Hatıraların" TextColor="#FF7F00" FontSize="13" FontAttributes="Bold"/>
+                <Border BackgroundColor="#1E1E1E" Stroke="#333333" StrokeShape="RoundRectangle 12" Padding="12,8">
+                    <Editor x:Name="ContentEditor" 
+                            Placeholder="Neler gördün, ne yedin, kimi tanıdın? Detayları buraya dök..." 
+                            PlaceholderColor="#777777" 
+                            TextColor="White" 
+                            HeightRequest="140" 
+                            AutoSize="TextChanges"/>
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- Kaydet Butonu -->
+            <Button Text="💾 Anıyı Günlüğüme Kaydet" 
+                    Clicked="OnSaveClicked"
+                    BackgroundColor="#FF7F00" 
+                    TextColor="White" 
+                    FontAttributes="Bold" 
+                    CornerRadius="14" 
+                    HeightRequest="50" 
+                    Margin="0,15,0,20"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

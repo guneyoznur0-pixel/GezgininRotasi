@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GezginRotası2.PackingChecklistPage"
+             Title="🎒 Akıllı Valiz &amp; Çanta"
+             BackgroundColor="#121212">
+
+    <Grid RowDefinitions="Auto, Auto, *">
+
+        <!-- 1. Üst İlerleme Kartı -->
+        <Border Grid.Row="0" BackgroundColor="#1E1E1E" StrokeThickness="0" Padding="18,12">
+            <VerticalStackLayout Spacing="6">
+                <Grid ColumnDefinitions="*, Auto">
+                    <Label Text="Valiz Hazırlık Durumu" TextColor="#FF7F00" FontSize="16" FontAttributes="Bold"/>
+                    <Label Grid.Column="1" x:Name="ProgressLabel" Text="0 / 0 (%0)" TextColor="White" FontSize="13" FontAttributes="Bold"/>
+                </Grid>
+                <ProgressBar x:Name="ValizProgressBar" Progress="0.0" ProgressColor="#4CAF50" HeightRequest="6"/>
+            </VerticalStackLayout>
+        </Border>
+
+        <!-- 2. Tatil / Mevsim Seçim Butonları -->
+        <ScrollView Grid.Row="1" Orientation="Horizontal" HorizontalScrollBarVisibility="Never" Padding="15,8">
+            <HorizontalStackLayout Spacing="8">
+                <Button Text="☀️ Yaz / Deniz Tatili" Clicked="OnTypeClicked" BackgroundColor="#FF7F00" TextColor="White" CornerRadius="12" HeightRequest="36" FontSize="11"/>
+                <Button Text="🍂 Şehir &amp; Kültür Gezisi" Clicked="OnTypeClicked" BackgroundColor="#222222" TextColor="#CCCCCC" CornerRadius="12" HeightRequest="36" FontSize="11"/>
+                <Button Text="❄️ Kış &amp; Kayak Tatili" Clicked="OnTypeClicked" BackgroundColor="#222222" TextColor="#CCCCCC" CornerRadius="12" HeightRequest="36" FontSize="11"/>
+                <Button Text="🏕️ Doğa &amp; Kamp" Clicked="OnTypeClicked" BackgroundColor="#222222" TextColor="#CCCCCC" CornerRadius="12" HeightRequest="36" FontSize="11"/>
+            </HorizontalStackLayout>
+        </ScrollView>
+
+        <!-- 3. Eşya Listesi -->
+        <CollectionView Grid.Row="2" x:Name="ItemsCollection" Margin="15,6">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="0,4">
+                        <Border BackgroundColor="#1A1A1A" Stroke="#2A2A2A" StrokeThickness="1" StrokeShape="RoundRectangle 12" Padding="12,10">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnItemTapped" />
+                            </Border.GestureRecognizers>
+
+                            <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="12" VerticalOptions="Center">
+                                <Label Grid.Column="0" Text="{Binding Icon}" FontSize="20" VerticalOptions="Center"/>
+                                <Label Grid.Column="1" Text="{Binding Title}" TextColor="{Binding TextColor}" TextDecorations="{Binding TextDecoration}" FontSize="14" FontAttributes="Bold" VerticalOptions="Center"/>
+                                <CheckBox Grid.Column="2" IsChecked="{Binding IsPacked}" Color="#4CAF50" VerticalOptions="Center"/>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
+</ContentPage>

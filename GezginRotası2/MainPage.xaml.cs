@@ -6,7 +6,6 @@ public partial class MainPage : ContentPage
     {
         InitializeComponent();
 
-        // Şehirler listesini güvenli şekilde koddan yüklüyoruz
         CityPicker.ItemsSource = new List<string>
         {
             "Tüm Türkiye",
@@ -22,53 +21,83 @@ public partial class MainPage : ContentPage
             "Muğla",
             "Şanlıurfa",
             "Konya",
+            "Sivas",
+            "Kırşehir",
             "Eskişehir",
-            "Çanakkale"
+            "Çanakkale",
+            "Mardin",
+            "Rize"
         };
 
-        CityPicker.SelectedIndex = 0; // Varsayılan olarak "Tüm Türkiye" seçili gelsin
+        CityPicker.SelectedIndex = 0;
     }
 
-    // 🤖 Yapay Zeka Asistanı Butonu
+    // 🤖 Yapay Zeka Asistanı
     private async void OnAiAssistantClicked(object sender, EventArgs e)
     {
         string seciliSehir = CityPicker.SelectedItem?.ToString() ?? "Tüm Türkiye";
         await Navigation.PushAsync(new AiAssistantPage(seciliSehir));
     }
 
-    // 🏛️ Gezilecek Yerler Butonu
+    // 🎲 Şans Çarkı / Kararsızım
+    private async void OnSansCarkiClicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new RandomAdventurePage());
+    }
+
+    // 🗣️ Yöresel Şive Sözlüğü
+    private async void OnSiveSozluguClicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new LocalDictionaryPage());
+    }
+
+    // 🎒 Akıllı Valiz Listesi
+    private async void OnValizClicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new PackingChecklistPage());
+    }
+
+    // 📸 Gezgin Kartpostalı Paylaş
+    private async void OnKartpostalClicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new PostcardSharePage());
+    }
+
+    // 🏛️ Gezilecek Yerler
     private async void OnGezilecekYerlerTapped(object sender, EventArgs e)
     {
         string seciliSehir = CityPicker.SelectedItem?.ToString() ?? "Tüm Türkiye";
         await Navigation.PushAsync(new PlacesPage(seciliSehir, "Gezilecek"));
     }
 
-    // 🏺 Müzeler Butonu
+    // 🏺 Müzeler
     private async void OnMuzelerTapped(object sender, EventArgs e)
     {
         string seciliSehir = CityPicker.SelectedItem?.ToString() ?? "Tüm Türkiye";
         await Navigation.PushAsync(new PlacesPage(seciliSehir, "Müzeler"));
     }
 
-    // 🏔️ Doğa Butonu
-    private async void OnDogaTapped(object sender, EventArgs e)
-    {
-        string seciliSehir = CityPicker.SelectedItem?.ToString() ?? "Tüm Türkiye";
-        await Navigation.PushAsync(new PlacesPage(seciliSehir, "Doğa"));
-    }
-
-    // 🚌 Ulaşım Butonu
-    private async void OnUlasimTapped(object sender, EventArgs e)
-    {
-        string seciliSehir = CityPicker.SelectedItem?.ToString() ?? "Tüm Türkiye";
-        await Navigation.PushAsync(new PlacesPage(seciliSehir, "Ulaşım"));
-    } // 🍲 Meşhur Lezzetler Butonu
+    // 🍲 Ne Yenir? (Meşhur Lezzetler)
     private async void OnLezzetlerTapped(object sender, EventArgs e)
     {
         string seciliSehir = CityPicker.SelectedItem?.ToString() ?? "Tüm Türkiye";
         await Navigation.PushAsync(new FoodsPage(seciliSehir));
     }
-    // 🇹🇷 Gezgin Pasaportu Butonu
+
+    // 🎧 Şehrin Şarkıları & Kültür
+    private async void OnKulturTapped(object sender, EventArgs e)
+    {
+        string seciliSehir = CityPicker.SelectedItem?.ToString() ?? "Tüm Türkiye";
+        await Navigation.PushAsync(new CityCulturePage(seciliSehir));
+    }
+
+    // 📓 Gezgin Günlüğüm
+    private async void OnGunlukTapped(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new DiaryPage());
+    }
+
+    // 🇹🇷 81 İl Pasaportum
     private async void OnPasaportTapped(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new PassportPage());

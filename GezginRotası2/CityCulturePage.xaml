@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:GezginRotası2"
+             x:Class="GezginRotası2.CityCulturePage"
+             Title="🎧 Şehrin Ruhu &amp; Türküleri"
+             BackgroundColor="#121212">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="20">
+
+            <!-- Başlık -->
+            <Border BackgroundColor="#1E1E1E" StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="16">
+                <VerticalStackLayout Spacing="2">
+                    <Label x:Name="HeaderCityLabel" Text="📍 Şehrin Kültürü &amp; Şarkıları" TextColor="#FF7F00" FontSize="18" FontAttributes="Bold"/>
+                    <Label Text="O topraklarda doğmuş büyük insanlar ve dinlenecek türküler" TextColor="#888888" FontSize="12"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- 1. BÖLÜM: YÖRESEL TÜRKÜLER & ŞARKILAR -->
+            <VerticalStackLayout Spacing="10">
+                <Label Text="🎵 Dinlenecek Yöresel Türküler" TextColor="White" FontSize="16" FontAttributes="Bold"/>
+
+                <CollectionView x:Name="SongsCollection">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="local:FolkSong">
+                            <Grid Padding="0,5">
+                                <Border BackgroundColor="#1A1A1A" Stroke="#333333" StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="14">
+                                    <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="12" VerticalOptions="Center">
+
+                                        <!-- Müzik İkonu -->
+                                        <Border Grid.Column="0" BackgroundColor="#2D2D2D" StrokeThickness="0" StrokeShape="RoundRectangle 10" WidthRequest="44" HeightRequest="44">
+                                            <Label Text="🎶" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                        </Border>
+
+                                        <!-- Şarkı ve Hikaye -->
+                                        <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                            <Label Text="{Binding Title}" TextColor="White" FontSize="15" FontAttributes="Bold"/>
+                                            <Label Text="{Binding Artist}" TextColor="#FF7F00" FontSize="12"/>
+                                            <Label Text="{Binding Story}" TextColor="#999999" FontSize="11" LineHeight="1.2"/>
+                                        </VerticalStackLayout>
+
+                                        <!-- Dinle Butonu (YouTube / Spotify açar) -->
+                                        <Button Grid.Column="2" 
+                                                Text="▶️ Dinle" 
+                                                Clicked="OnPlaySongClicked"
+                                                BackgroundColor="#FF7F00" 
+                                                TextColor="White" 
+                                                CornerRadius="10" 
+                                                FontSize="11" 
+                                                HeightRequest="36"
+                                                Padding="10,0"/>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+
+            <!-- 2. BÖLÜM: TARİHİ & ÖNEMLİ ŞAHSİYETLER -->
+            <VerticalStackLayout Spacing="10">
+                <Label Text="👑 Önemli Şahsiyetler &amp; Ozanlar" TextColor="White" FontSize="16" FontAttributes="Bold"/>
+
+                <CollectionView x:Name="PeopleCollection">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="local:HistoricPerson">
+                            <Grid Padding="0,5">
+                                <Border BackgroundColor="#1A1A1A" Stroke="#333333" StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="14">
+                                    <VerticalStackLayout Spacing="4">
+                                        <Grid ColumnDefinitions="*, Auto">
+                                            <Label Grid.Column="0" Text="{Binding Name}" TextColor="White" FontSize="15" FontAttributes="Bold"/>
+                                            <Border Grid.Column="1" BackgroundColor="#2D2D2D" StrokeThickness="0" StrokeShape="RoundRectangle 6" Padding="6,2">
+                                                <Label Text="{Binding City}" TextColor="#FF7F00" FontSize="10" FontAttributes="Bold"/>
+                                            </Border>
+                                        </Grid>
+                                        <Label Text="{Binding Title}" TextColor="#FF7F00" FontSize="12" FontAttributes="Bold"/>
+                                        <Label Text="{Binding Bio}" TextColor="#AAAAAA" FontSize="12" LineHeight="1.3"/>
+                                    </VerticalStackLayout>
+                                </Border>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

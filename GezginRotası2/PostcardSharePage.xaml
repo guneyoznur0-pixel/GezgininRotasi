@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GezginRotası2.PostcardSharePage"
+             Title="📸 Gezgin Kartpostalı"
+             BackgroundColor="#121212">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="16" HorizontalOptions="Center" MaximumWidthRequest="420">
+
+            <VerticalStackLayout Spacing="2" HorizontalOptions="Center">
+                <Label Text="Sosyal Medya Kartpostalı" TextColor="#FF7F00" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center"/>
+                <Label Text="Gezdiğin şehri Story'de veya WhatsApp'ta paylaş!" TextColor="#888888" FontSize="12" HorizontalOptions="Center"/>
+            </VerticalStackLayout>
+
+            <!-- Şehir Seçimi -->
+            <Border BackgroundColor="#1E1E1E" Stroke="#333333" StrokeShape="RoundRectangle 12" Padding="12,0">
+                <Picker x:Name="CityPicker" Title="Kartpostal Şehrini Seç" TextColor="White" TitleColor="#888888" SelectedIndexChanged="OnCitySelected"/>
+            </Border>
+
+            <!-- 🎴 DİJİTAL KARTPOSTAL ÖNİZLEME ALANI -->
+            <Border BackgroundColor="#FFFFFF" 
+                    Stroke="#FF7F00" 
+                    StrokeThickness="3" 
+                    StrokeShape="RoundRectangle 16" 
+                    Padding="14" 
+                    Margin="0,8">
+                <VerticalStackLayout Spacing="10">
+
+                    <!-- Görsel -->
+                    <Grid HeightRequest="220">
+                        <Image x:Name="CardImage" 
+                               Source="https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?q=80&amp;w=1000&amp;auto=format&amp;fit=crop" 
+                               Aspect="AspectFill"/>
+
+                        <!-- Gezildi Mührü (VerticalOptions="Start" olarak düzeltildi) -->
+                        <Border BackgroundColor="#E6D32F2F" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="10,4" HorizontalOptions="End" VerticalOptions="Start" Margin="10">
+                            <Label Text="✔ GEZGİN ONAYLI" TextColor="White" FontSize="10" FontAttributes="Bold"/>
+                        </Border>
+                    </Grid>
+
+                    <!-- Şehir ve Açıklama -->
+                    <VerticalStackLayout Spacing="2">
+                        <Label x:Name="CardCityLabel" Text="📍 KAPADOKYA / NEVŞEHİR" TextColor="#1E1E1E" FontSize="18" FontAttributes="Bold"/>
+                        <Label x:Name="CardQuoteLabel" Text="“Bir masal diyarında, gökyüzüne dokunduk...”" TextColor="#555555" FontSize="12" FontAttributes="Italic"/>
+                    </VerticalStackLayout>
+
+                    <!-- Alt İmza & Logo -->
+                    <Grid ColumnDefinitions="*, Auto">
+                        <Label x:Name="CardDateLabel" Text="📅 21 Ağustos 2026" TextColor="#888888" FontSize="11" VerticalOptions="Center"/>
+                        <Label Grid.Column="1" Text="🇹🇷 Gezginin Rotası" TextColor="#FF7F00" FontSize="11" FontAttributes="Bold" VerticalOptions="Center"/>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Paylaş Butonu -->
+            <Button Text="📲 Story &amp; WhatsApp'ta Paylaş" 
+                    Clicked="OnShareClicked"
+                    BackgroundColor="#FF7F00" 
+                    TextColor="White" 
+                    FontAttributes="Bold" 
+                    CornerRadius="14" 
+                    HeightRequest="50" 
+                    FontSize="14"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

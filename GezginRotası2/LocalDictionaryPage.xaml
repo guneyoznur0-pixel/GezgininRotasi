@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:GezginRotası2"
+             x:Class="GezginRotası2.LocalDictionaryPage"
+             Title="🗣️ Yöresel Şive Sözlüğü"
+             BackgroundColor="#121212">
+
+    <Grid RowDefinitions="Auto, Auto, *">
+
+        <!-- Başlık -->
+        <Border Grid.Row="0" BackgroundColor="#1E1E1E" StrokeThickness="0" Padding="20,12">
+            <VerticalStackLayout Spacing="2">
+                <Label Text="81 İlin Yöresel Ağız &amp; Deyimleri" TextColor="#FF7F00" FontSize="18" FontAttributes="Bold"/>
+                <Label Text="Gittiğin şehirde yabancılık çekme, yerel halk gibi konuş!" TextColor="#888888" FontSize="12"/>
+            </VerticalStackLayout>
+        </Border>
+
+        <!-- Şehir Filtreleri -->
+        <ScrollView Grid.Row="1" Orientation="Horizontal" HorizontalScrollBarVisibility="Never" Padding="15,8">
+            <HorizontalStackLayout Spacing="8">
+                <Button Text="Tümü" Clicked="OnFilterClicked" BackgroundColor="#FF7F00" TextColor="White" CornerRadius="12" HeightRequest="34" FontSize="11"/>
+                <Button Text="İzmir" Clicked="OnFilterClicked" BackgroundColor="#222222" TextColor="#CCCCCC" CornerRadius="12" HeightRequest="34" FontSize="11"/>
+                <Button Text="Karadeniz" Clicked="OnFilterClicked" BackgroundColor="#222222" TextColor="#CCCCCC" CornerRadius="12" HeightRequest="34" FontSize="11"/>
+                <Button Text="Kayseri" Clicked="OnFilterClicked" BackgroundColor="#222222" TextColor="#CCCCCC" CornerRadius="12" HeightRequest="34" FontSize="11"/>
+                <Button Text="Adana" Clicked="OnFilterClicked" BackgroundColor="#222222" TextColor="#CCCCCC" CornerRadius="12" HeightRequest="34" FontSize="11"/>
+                <Button Text="Gaziantep" Clicked="OnFilterClicked" BackgroundColor="#222222" TextColor="#CCCCCC" CornerRadius="12" HeightRequest="34" FontSize="11"/>
+                <Button Text="Erzurum" Clicked="OnFilterClicked" BackgroundColor="#222222" TextColor="#CCCCCC" CornerRadius="12" HeightRequest="34" FontSize="11"/>
+            </HorizontalStackLayout>
+        </ScrollView>
+
+        <!-- Kelime Kartları -->
+        <CollectionView Grid.Row="2" 
+                        x:Name="WordsCollection"
+                        Margin="15,6">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="local:DialectWord">
+                    <Grid Padding="0,5">
+                        <Border BackgroundColor="#1E1E1E" Stroke="#2A2A2A" StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="16">
+                            <VerticalStackLayout Spacing="6">
+                                <Grid ColumnDefinitions="*, Auto">
+                                    <Label Grid.Column="0" Text="{Binding Word}" TextColor="White" FontSize="18" FontAttributes="Bold"/>
+                                    <Border Grid.Column="1" BackgroundColor="#333333" StrokeThickness="0" StrokeShape="RoundRectangle 6" Padding="8,3">
+                                        <Label Text="{Binding City}" TextColor="#FF7F00" FontSize="11" FontAttributes="Bold"/>
+                                    </Border>
+                                </Grid>
+
+                                <Label Text="{Binding Meaning}" TextColor="#FFD700" FontSize="13" FontAttributes="Bold"/>
+
+                                <Border BackgroundColor="#161616" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="10,6">
+                                    <Label Text="{Binding Example}" TextColor="#AAAAAA" FontSize="12" FontAttributes="Italic"/>
+                                </Border>
+                            </VerticalStackLayout>
+                        </Border>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
+</ContentPage>

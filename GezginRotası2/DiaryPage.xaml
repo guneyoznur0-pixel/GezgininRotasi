@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:GezginRotası2"
+             x:Class="GezginRotası2.DiaryPage"
+             Title="📓 Gezgin Günlüğüm"
+             BackgroundColor="#121212">
+
+    <Grid RowDefinitions="Auto, *">
+
+        <!-- Üst Başlık ve Yeni Anı Ekle Butonu -->
+        <Border Grid.Row="0" BackgroundColor="#1E1E1E" StrokeThickness="0" Padding="20,12">
+            <Grid ColumnDefinitions="*, Auto">
+                <VerticalStackLayout Grid.Column="0" Spacing="2">
+                    <Label Text="Gezi Notlarım &amp; Anılarım" TextColor="#FF7F00" FontSize="18" FontAttributes="Bold"/>
+                    <Label Text="Gittiğin yerlerdeki hatıralarını ölümsüzleştir" TextColor="#888888" FontSize="12"/>
+                </VerticalStackLayout>
+
+                <Button Grid.Column="1" 
+                        Text="✍️ Yeni Anı Yaz" 
+                        Clicked="OnAddEntryClicked"
+                        BackgroundColor="#FF7F00" 
+                        TextColor="White" 
+                        FontAttributes="Bold" 
+                        CornerRadius="12" 
+                        HeightRequest="40" 
+                        FontSize="12"/>
+            </Grid>
+        </Border>
+
+        <!-- Anı Kartları Listesi -->
+        <CollectionView Grid.Row="1" 
+                        x:Name="DiaryCollection"
+                        Margin="15,10">
+            <CollectionView.EmptyView>
+                <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10" Padding="30">
+                    <Label Text="📖" FontSize="50" HorizontalOptions="Center"/>
+                    <Label Text="Henüz bir gezi anısı eklemediniz." TextColor="#CCCCCC" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center"/>
+                    <Label Text="'Yeni Anı Yaz' butonuna basarak ilk hatıranızı kaydedin!" TextColor="#777777" FontSize="13" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="local:DiaryEntry">
+                    <Grid Padding="0,6">
+                        <Border BackgroundColor="#1E1E1E" 
+                                Stroke="#2A2A2A" 
+                                StrokeThickness="1" 
+                                StrokeShape="RoundRectangle 16" 
+                                Padding="16">
+                            <VerticalStackLayout Spacing="8">
+                                <!-- Üst Bilgi: Şehir + Tarih + Ruh Hali -->
+                                <Grid ColumnDefinitions="Auto, *, Auto">
+                                    <HorizontalStackLayout Grid.Column="0" Spacing="6">
+                                        <Label Text="{Binding MoodEmoji}" FontSize="18"/>
+                                        <Border BackgroundColor="#333333" StrokeThickness="0" StrokeShape="RoundRectangle 6" Padding="6,2">
+                                            <Label Text="{Binding City}" TextColor="#FF7F00" FontSize="11" FontAttributes="Bold"/>
+                                        </Border>
+                                    </HorizontalStackLayout>
+
+                                    <Label Grid.Column="2" Text="{Binding DateText}" TextColor="#777777" FontSize="11" VerticalOptions="Center"/>
+                                </Grid>
+
+                                <!-- Başlık -->
+                                <Label Text="{Binding Title}" TextColor="White" FontSize="16" FontAttributes="Bold"/>
+
+                                <!-- Anı Metni -->
+                                <Label Text="{Binding Content}" TextColor="#CCCCCC" FontSize="13" LineHeight="1.3"/>
+
+                                <!-- Alt Çizgi ve Sil Butonu -->
+                                <BoxView HeightRequest="1" Color="#2A2A2A" Margin="0,4"/>
+
+                                <Button Text="🗑️ Bu Anıyı Sil" 
+                                        Clicked="OnDeleteClicked" 
+                                        CommandParameter="{Binding Id}"
+                                        BackgroundColor="Transparent" 
+                                        TextColor="#FF5252" 
+                                        FontSize="11" 
+                                        HorizontalOptions="End" 
+                                        HeightRequest="30"
+                                        Padding="0"/>
+                            </VerticalStackLayout>
+                        </Border>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>
