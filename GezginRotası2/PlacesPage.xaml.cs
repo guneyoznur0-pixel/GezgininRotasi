@@ -2,42 +2,56 @@ namespace GezginRotası2;
 
 public partial class PlacesPage : ContentPage
 {
-    private readonly PlaceDataService _dataService = new();
+    private readonly PlacesDataService _placesService = new();
     private readonly string _city;
-    private readonly string _category;
+    private string _currentCategory = "Tümü";
 
-    public PlacesPage(string selectedCity, string selectedCategory = "")
+    public PlacesPage() : this("Tüm Türkiye", "Tümü")
     {
-        InitializeComponent();
-
-        _city = selectedCity;
-        _category = selectedCategory;
-
-        Title = string.IsNullOrEmpty(_category)
-            ? $"{_city} - Gezilecek Yerler"
-            : $"{_city} - {_category}";
     }
 
-    protected override async void OnAppearing()
+    public PlacesPage(string selectedCity, string category = "Tümü")
     {
-        base.OnAppearing();
+        InitializeComponent();
+        _city = string.IsNullOrWhiteSpace(selectedCity) ? "Tüm Türkiye" : selectedCity;
+        _currentCategory = string.IsNullOrWhiteSpace(category) ? "Tümü" : category;
 
-        var (places, errorMessage) = await _dataService.GetPlacesWithCacheAsync(_city, _category);
+        PageTitleLabel.Text = _city == "Tüm Türkiye"
+            ? "📍 Tüm Türkiye Gezilecek Yerler & Müzeler"
+            : $"📍 {_city} Gezilecek Yerler & Müzeler";
 
-        if (!string.IsNullOrEmpty(errorMessage))
-        {
-            await DisplayAlert("Bilgi / Hata", errorMessage, "Tamam");
-        }
+        LoadPlaces();
+    }
 
+    private void LoadPlaces()
+    {
+        var places = _placesService.GetPlaces(_city, _currentCategory);
         PlacesCollection.ItemsSource = places;
     }
 
-    private async void OnPlaceSelected(object sender, SelectionChangedEventArgs e)
+    private void OnCategoryFilterClicked(object sender, EventArgs e)
     {
-        if (e.CurrentSelection.Count > 0 && e.CurrentSelection[0] is Place selectedPlace)
+        if (sender is Button btn)
         {
-            await Navigation.PushAsync(new PlaceDetailPage(selectedPlace));
-            ((CollectionView)sender).SelectedItem = null;
+            _currentCategory = btn.Text;
+            LoadPlaces();
+        }
+    }
+
+    private async void OnMapDirectionsClicked(object sender, EventArgs e)
+    {
+        if (sender is Button { BindingContext: PlaceItem place })
+        {
+            try
+            {
+                string search = $"{place.Name} {place.City}";
+                string uri = $"https://www.google.com/maps/search/?api=1&query={Uri.EscapeDataString(search)}";
+                await Launcher.OpenAsync(new Uri(uri));
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Bilgi", $"Harita açılamadı: {ex.Message}", "Tamam");
+            }
         }
     }
 }

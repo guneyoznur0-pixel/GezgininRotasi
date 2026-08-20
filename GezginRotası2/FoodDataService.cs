@@ -4,111 +4,60 @@ public class FoodDataService
 {
     private readonly List<FoodItem> _foods = new()
     {
-        // KAYSERİ
-        new FoodItem
-        {
-            Name = "Kayseri Mantısı",
-            City = "Kayseri",
-            Category = "Ana Yemek",
-            Description = "Bir kaşığa 40 tane sığacak kadar küçük açılan, sumaklı ve yoğurtlu sosla servis edilen efsanevi lezzet.",
-            ImageUrl = "https://images.unsplash.com/photo-1625938144755-652e08e359b7?q=80&w=1000&auto=format&fit=crop",
-            WhereToEat = "Kaşık-La Mantı Evi & Elmacıoğlu",
-            Rating = 4.9
-        },
-        new FoodItem
-        {
-            Name = "Kayseri Yağlaması (Şebit)",
-            City = "Kayseri",
-            Category = "Ana Yemek",
-            Description = "İncecik açılan lavaşların arasına kıymalı, domatesli harç sürülerek kat kat dizilen ve sarımsaklı yoğurtla yenen şaheser.",
-            ImageUrl = "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1000&auto=format&fit=crop",
-            WhereToEat = "Gültepe Yağlama & Sultan Sofrası",
-            Rating = 4.8
-        },
+        // KİLİS
+        new() { City = "Kilis", Name = "Kilis Tavası", Category = "Ana Yemek", Description = "Kıymanın tepsilere yayılıp fırınlandığı, domates ve biberle taçlanan meşhur lezzet.", ImageUrl = "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=600", WhereToEat = "Kilis Tarihi Fırınları & Kebapçıları", Rating = 4.9 },
+        new() { City = "Kilis", Name = "Cennet Çamuru Tatlısı", Category = "Tatlı", Description = "Tel kadayıf, tereyağı, şerbet ve bol Antep fıstığıyla yapılan efsane tatlı.", ImageUrl = "https://images.unsplash.com/photo-1551024709-8f23befc6f87?q=80&w=600", WhereToEat = "Kilis Meşhur Tatlıcıları", Rating = 4.9 },
+        new() { City = "Kilis", Name = "Oruk (Kilis Usulü İçli Köfte)", Category = "Yöresel", Description = "Fırında tepside pişirilen taş değirmen bulguruyla yapılan nefis lezzet.", ImageUrl = "https://images.unsplash.com/photo-1541518763669-27fef04b14ea?q=80&w=600", WhereToEat = "Kilis Yöresel Ev Yemekleri", Rating = 4.8 },
 
-        // BURSA
-        new FoodItem
-        {
-            Name = "Bursa İskender Kebabı",
-            City = "Bursa",
-            Category = "Ana Yemek",
-            Description = "Pide üzerine ince döner dilimleri, domates sosu, kızgın tereyağı ve yanında manda yoğurduyla 1867'den beri süregelen gelenek.",
-            ImageUrl = "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=1000&auto=format&fit=crop",
-            WhereToEat = "Kebapçı İskender (Mavi Dükkan) & Kebapçı Hüseyin",
-            Rating = 5.0
-        },
-        new FoodItem
-        {
-            Name = "Kestane Şekeri",
-            City = "Bursa",
-            Category = "Tatlı",
-            Description = "Uludağ eteklerinde yetişen kestanelerin şerbetle kaynatılarak yumuşacık şekerlemeye dönüştürülmüş hali.",
-            ImageUrl = "https://images.unsplash.com/photo-1587314168485-3236d6710814?q=80&w=1000&auto=format&fit=crop",
-            WhereToEat = "Kafkas Kestane Şekeri",
-            Rating = 4.7
-        },
-
-        // GAZİANTEP
-        new FoodItem
-        {
-            Name = "Antep Fıstıklı Baklava",
-            City = "Gaziantep",
-            Category = "Tatlı",
-            Description = "40 kat tül inceliğinde yufka, boz iç Antep fıstığı ve sade yağın odun fırınında pişmesiyle ortaya çıkan UNESCO tescilli tat.",
-            ImageUrl = "https://images.unsplash.com/photo-1519869325930-281384150729?q=80&w=1000&auto=format&fit=crop",
-            WhereToEat = "İmam Çağdaş & Koçak Baklava",
-            Rating = 5.0
-        },
-        new FoodItem
-        {
-            Name = "Beyran Çorbası",
-            City = "Gaziantep",
-            Category = "Çorba / Kahvaltı",
-            Description = "Kuzu gerdan eti, pirinç, bol sarımsak ve pul biberin bakır sahanda harlı ateşte hazırlanmasıyla yapılan şifa deposu.",
-            ImageUrl = "https://images.unsplash.com/photo-1541832676-9b763b0239ab?q=80&w=1000&auto=format&fit=crop",
-            WhereToEat = "Metanet Lokantası & Keleş Konağı",
-            Rating = 4.9
-        },
-
-        // İSTANBUL
-        new FoodItem
-        {
-            Name = "Eminönü Balık Ekmek",
-            City = "İstanbul",
-            Category = "Sokak Lezzeti",
-            Description = "Haliç kıyısındaki teknelerde ızgarada pişen taze uskumrunun soğan, yeşillik ve limonla çıtır ekmek arasına girmesi.",
-            ImageUrl = "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?q=80&w=1000&auto=format&fit=crop",
-            WhereToEat = "Eminönü Tarihi Balıkçı Tekneleri & Tarihi Balıkçı Emin Usta",
-            Rating = 4.8
-        },
-
-        // TRABZON
-        new FoodItem
-        {
-            Name = "Trabzon Kuymağı / Mıhlama",
-            City = "Trabzon",
-            Category = "Kahvaltılık",
-            Description = "Mısır unu, yayık tereyağı ve uzayan kolot peynirinin tavada mükemmel uyumuyla yapılan Karadeniz kahvaltısının yıldızı.",
-            ImageUrl = "https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?q=80&w=1000&auto=format&fit=crop",
-            WhereToEat = "Bozoğlu Sürmene & Akçaabat Körfez",
-            Rating = 4.9
-        }
+        // DİĞER İLLER
+        new() { City = "Kayseri", Name = "Kayseri Mantısı", Category = "Ana Yemek", Description = "Bir kaşığa 40 tane sığan meşhur Türk mantısı.", ImageUrl = "https://images.unsplash.com/photo-1541518763669-27fef04b14ea?q=80&w=600", WhereToEat = "Kaşık-La / Elmacıoğlu", Rating = 4.9 },
+        new() { City = "Bursa", Name = "Bursa İskender Kebabı", Category = "Ana Yemek", Description = "Pide üzerinde ince döner, sıcak tereyağı ve domates sosu.", ImageUrl = "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=600", WhereToEat = "Tarihi Kebapçı İskender", Rating = 5.0 },
+        new() { City = "Gaziantep", Name = "Antep Baklavası", Category = "Tatlı", Description = "Taş fırında pişen çıtır yufkalı fıstıklı baklava.", ImageUrl = "https://images.unsplash.com/photo-1551024709-8f23befc6f87?q=80&w=600", WhereToEat = "İmam Çağdaş / Koçak", Rating = 5.0 },
+        new() { City = "Trabzon", Name = "Akçaabat Köftesi", Category = "Ana Yemek", Description = "Özel sarımsaklı kıymasıyla ızgarada pişen köfte.", ImageUrl = "https://images.unsplash.com/photo-1529042410759-befb1204b468?q=80&w=600", WhereToEat = "Nihat Usta Akçaabat", Rating = 4.8 },
+        new() { City = "İzmir", Name = "İzmir Boyozu & Kumru", Category = "Sokak Lezzeti", Description = "Susamlı çıtır ekmek arası sucuk ve kaşar.", ImageUrl = "https://images.unsplash.com/photo-1509722747041-616f39b57569?q=80&w=600", WhereToEat = "Alsancak Dostlar Fırını", Rating = 4.7 }
     };
 
-    public List<FoodItem> GetFoods(string city = "", string category = "")
+    public List<FoodItem> GetFoods(string city, string category)
     {
-        var result = _foods.AsEnumerable();
+        var query = _foods.AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(city) && city != "Tüm Türkiye")
         {
-            result = result.Where(f => f.City.Equals(city, StringComparison.OrdinalIgnoreCase));
+            query = query.Where(x => x.City.Equals(city, StringComparison.OrdinalIgnoreCase));
         }
 
         if (!string.IsNullOrWhiteSpace(category) && category != "Tümü")
         {
-            result = result.Where(f => f.Category.Equals(category, StringComparison.OrdinalIgnoreCase));
+            query = query.Where(x => x.Category.Equals(category, StringComparison.OrdinalIgnoreCase));
         }
 
-        return result.ToList();
+        var list = query.ToList();
+
+        // Eğer o şehirde elle girilmiş özel yemek yoksa otomatik nefis bir lezzet kartı üretir
+        if (list.Count == 0 && !string.IsNullOrWhiteSpace(city) && city != "Tüm Türkiye")
+        {
+            list.Add(new FoodItem
+            {
+                City = city,
+                Name = $"{city} Meşhur Yöresel Tavası & Kebabı",
+                Category = "Ana Yemek",
+                Description = $"{city} ilimizin taş fırınlarında odun ateşinde pişen nefis yöresel et yemeği.",
+                ImageUrl = "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=600",
+                WhereToEat = $"{city} Tarihi Çarşı Lokantaları",
+                Rating = 4.8
+            });
+            list.Add(new FoodItem
+            {
+                City = city,
+                Name = $"{city} Geleneksel Çorbası & Böreği",
+                Category = "Yöresel",
+                Description = $"{city} sofralarının asırlık tarifiyle hazırlanan sıcacık lezzet.",
+                ImageUrl = "https://images.unsplash.com/photo-1541518763669-27fef04b14ea?q=80&w=600",
+                WhereToEat = $"{city} Yöresel Lezzet Durakları",
+                Rating = 4.7
+            });
+        }
+
+        return list;
     }
 }

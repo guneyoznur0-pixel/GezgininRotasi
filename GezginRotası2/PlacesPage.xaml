@@ -3,18 +3,75 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:GezginRotası2"
              x:Class="GezginRotası2.PlacesPage"
+             Title="📍 Gezilecek Yerler &amp; Müzeler"
              BackgroundColor="#121212">
 
-    <CollectionView x:Name="PlacesCollection"
-                    SelectionMode="Single"
-                    SelectionChanged="OnPlaceSelected">
-        <CollectionView.ItemTemplate>
-            <DataTemplate x:DataType="local:Place">
-                <Grid Padding="15">
-                    <Label Text="{Binding Name}" TextColor="White" FontSize="18" />
-                </Grid>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+    <Grid RowDefinitions="Auto, Auto, *">
 
+        <!-- 1. Üst Başlık -->
+        <Border Grid.Row="0" BackgroundColor="#1E1E1E" StrokeThickness="0" Padding="18,12">
+            <VerticalStackLayout Spacing="2">
+                <Label x:Name="PageTitleLabel" Text="📍 Tüm Türkiye Gezilecek Yerler" TextColor="#FF7F00" FontSize="18" FontAttributes="Bold"/>
+                <Label Text="Tarihi yapılar, açık hava müzeleri ve eşsiz güzellikler" TextColor="#888888" FontSize="12"/>
+            </VerticalStackLayout>
+        </Border>
+
+        <!-- 2. Kategori Filtresi (Tümü, Gezilecek, Müzeler) -->
+        <ScrollView Grid.Row="1" Orientation="Horizontal" HorizontalScrollBarVisibility="Never" Padding="15,8">
+            <HorizontalStackLayout Spacing="8">
+                <Button Text="Tümü" Clicked="OnCategoryFilterClicked" BackgroundColor="#FF7F00" TextColor="White" CornerRadius="12" HeightRequest="36" FontSize="12" FontAttributes="Bold"/>
+                <Button Text="Gezilecek" Clicked="OnCategoryFilterClicked" BackgroundColor="#222222" TextColor="#CCCCCC" CornerRadius="12" HeightRequest="36" FontSize="12"/>
+                <Button Text="Müzeler" Clicked="OnCategoryFilterClicked" BackgroundColor="#222222" TextColor="#CCCCCC" CornerRadius="12" HeightRequest="36" FontSize="12"/>
+            </HorizontalStackLayout>
+        </ScrollView>
+
+        <!-- 3. Kart Listesi -->
+        <CollectionView Grid.Row="2" x:Name="PlacesCollection" Margin="15,6">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="local:PlaceItem">
+                    <Grid Padding="0,8">
+                        <Border BackgroundColor="#1A1A1A" Stroke="#2A2A2A" StrokeThickness="1" StrokeShape="RoundRectangle 16" Padding="0">
+                            <VerticalStackLayout Spacing="0">
+
+                                <!-- Fotoğraf ve Puan Rozeti -->
+                                <Grid HeightRequest="170">
+                                    <Image Source="{Binding ImageUrl}" Aspect="AspectFill"/>
+
+                                    <!-- Şehir ve Puan -->
+                                    <Border BackgroundColor="#CC000000" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="8,4" HorizontalOptions="Start" VerticalOptions="Start" Margin="10">
+                                        <Label Text="{Binding City}" TextColor="#FF7F00" FontSize="11" FontAttributes="Bold"/>
+                                    </Border>
+
+                                    <Border BackgroundColor="#CC000000" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="8,4" HorizontalOptions="End" VerticalOptions="Start" Margin="10">
+                                        <HorizontalStackLayout Spacing="4">
+                                            <Label Text="⭐" FontSize="11"/>
+                                            <Label Text="{Binding Rating, StringFormat='{0:F1}'}" TextColor="White" FontSize="11" FontAttributes="Bold"/>
+                                        </HorizontalStackLayout>
+                                    </Border>
+                                </Grid>
+
+                                <!-- Açıklama ve Harita Butonu -->
+                                <VerticalStackLayout Padding="14" Spacing="8">
+                                    <Label Text="{Binding Name}" TextColor="White" FontSize="16" FontAttributes="Bold"/>
+                                    <Label Text="{Binding Description}" TextColor="#AAAAAA" FontSize="12" LineHeight="1.3"/>
+
+                                    <Button Text="📍 Haritada Gör / Yol Tarifi" 
+                                            Clicked="OnMapDirectionsClicked" 
+                                            BackgroundColor="#FF7F00" 
+                                            TextColor="White" 
+                                            FontAttributes="Bold" 
+                                            CornerRadius="10" 
+                                            HeightRequest="38" 
+                                            FontSize="12" 
+                                            Margin="0,4,0,0"/>
+                                </VerticalStackLayout>
+
+                            </VerticalStackLayout>
+                        </Border>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
 </ContentPage>

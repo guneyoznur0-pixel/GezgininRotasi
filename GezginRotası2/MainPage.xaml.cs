@@ -6,29 +6,8 @@ public partial class MainPage : ContentPage
     {
         InitializeComponent();
 
-        CityPicker.ItemsSource = new List<string>
-        {
-            "Tüm Türkiye",
-            "İstanbul",
-            "Ankara",
-            "İzmir",
-            "Bursa",
-            "Antalya",
-            "Kayseri",
-            "Nevşehir (Kapadokya)",
-            "Gaziantep",
-            "Trabzon",
-            "Muğla",
-            "Şanlıurfa",
-            "Konya",
-            "Sivas",
-            "Kırşehir",
-            "Eskişehir",
-            "Çanakkale",
-            "Mardin",
-            "Rize"
-        };
-
+        // 81 İlin tamamını ve 'Tüm Türkiye' seçeneğini otomatik yükler
+        CityPicker.ItemsSource = CityDatabase.AllCitiesWithAll;
         CityPicker.SelectedIndex = 0;
     }
 
