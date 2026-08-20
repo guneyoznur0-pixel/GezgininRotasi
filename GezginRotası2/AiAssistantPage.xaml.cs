@@ -9,18 +9,23 @@ public partial class AiAssistantPage : ContentPage
 
     public ObservableCollection<ChatMessage> Messages { get; set; } = new();
 
-    public AiAssistantPage(string selectedCity = "")
+    // 1. Alt Menü (TabBar) için boş kurucu
+    public AiAssistantPage() : this("Tüm Türkiye")
+    {
+    }
+
+    // 2. Şehir seçerek açmak için kurucu
+    public AiAssistantPage(string selectedCity)
     {
         InitializeComponent();
         _currentCity = selectedCity;
         BindingContext = this;
 
-        if (!string.IsNullOrWhiteSpace(_currentCity))
+        if (!string.IsNullOrWhiteSpace(_currentCity) && _currentCity != "Tüm Türkiye")
         {
             CityHeaderLabel.Text = $"📍 Seçili Şehir: {_currentCity}";
         }
 
-        // Açılışta önceki geçmişi hafızadan yükle (İnternetsiz de çalışır)
         _ = LoadSavedMessagesAsync();
     }
 
@@ -37,7 +42,6 @@ public partial class AiAssistantPage : ContentPage
         }
         else
         {
-            // Eğer geçmiş yoksa ilk karşılama mesajı
             Messages.Add(new ChatMessage
             {
                 IsUser = false,
@@ -55,26 +59,20 @@ public partial class AiAssistantPage : ContentPage
 
         MessageEntry.Text = string.Empty;
 
-        // 1. Kullanıcı mesajını ekle
         var userMsg = new ChatMessage { Text = text, IsUser = true };
         Messages.Add(userMsg);
 
-        // 2. Yükleniyor animasyonunu aç
         LoadingIndicator.IsVisible = true;
         LoadingIndicator.IsRunning = true;
 
-        // 3. Gemini API'den yanıt al
         string aiReply = await _geminiService.AskTravelGuideAsync(text, _currentCity);
 
-        // 4. Yükleniyor animasyonunu kapat
         LoadingIndicator.IsRunning = false;
         LoadingIndicator.IsVisible = false;
 
-        // 5. AI yanıtını ekle
         var aiMsg = new ChatMessage { Text = aiReply, IsUser = false };
         Messages.Add(aiMsg);
 
-        // 6. ÇEVRİMDIŞI KULLANIM İÇİN CİHAZIN HAFIZASINA KAYDET:
         await ChatHistoryService.SaveHistoryAsync(Messages);
     }
 

@@ -6,7 +6,13 @@ public partial class FoodsPage : ContentPage
     private readonly string _city;
     private string _currentCategory = "Tümü";
 
-    public FoodsPage(string selectedCity = "Tüm Türkiye")
+    // 1. Alt Menü (TabBar) için boş kurucu
+    public FoodsPage() : this("Tüm Türkiye")
+    {
+    }
+
+    // 2. Şehir seçerek açmak için kurucu
+    public FoodsPage(string selectedCity)
     {
         InitializeComponent();
         _city = string.IsNullOrWhiteSpace(selectedCity) ? "Tüm Türkiye" : selectedCity;
@@ -33,7 +39,6 @@ public partial class FoodsPage : ContentPage
         }
     }
 
-    // Lezzetin en iyi yapıldığı mekanı doğrudan Google Haritalar'da açar
     private async void OnOpenMapClicked(object sender, EventArgs e)
     {
         if (sender is Button { BindingContext: FoodItem food })

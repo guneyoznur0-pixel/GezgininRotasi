@@ -6,7 +6,7 @@
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new MainPage());//navigasyon tüneli içinde olması için
+            MainPage = new AppShell(); // Alt gezinme menümüzü açar
         }
     }
 }
