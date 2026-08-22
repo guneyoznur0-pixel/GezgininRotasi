@@ -3,19 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GezginRotası2.PostcardSharePage"
              Title="📸 Gezgin Kartpostalı"
-             BackgroundColor="#121212">
+             BackgroundColor="#0D0F15">
 
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="16" HorizontalOptions="Center" MaximumWidthRequest="420">
 
-            <VerticalStackLayout Spacing="2" HorizontalOptions="Center">
-                <Label Text="Sosyal Medya Kartpostalı" TextColor="#FF7F00" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center"/>
-                <Label Text="Gezdiğin şehri Story'de veya WhatsApp'ta paylaş!" TextColor="#888888" FontSize="12" HorizontalOptions="Center"/>
+            <VerticalStackLayout Spacing="3" HorizontalOptions="Center">
+                <Label x:Name="PageHeaderLabel" Text="Sosyal Medya Kartpostalı" TextColor="#FF7F00" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center"/>
+                <Label x:Name="PageSubtitleLabel" Text="Gezdiğin şehri Story'de veya WhatsApp'ta paylaş!" TextColor="#8E95A5" FontSize="12" HorizontalOptions="Center"/>
             </VerticalStackLayout>
 
             <!-- Şehir Seçimi -->
-            <Border BackgroundColor="#1E1E1E" Stroke="#333333" StrokeShape="RoundRectangle 12" Padding="12,0">
-                <Picker x:Name="CityPicker" Title="Kartpostal Şehrini Seç" TextColor="White" TitleColor="#888888" SelectedIndexChanged="OnCitySelected"/>
+            <Border BackgroundColor="#181B24" Stroke="#262C3A" StrokeShape="RoundRectangle 12" Padding="12,0">
+                <Picker x:Name="CityPicker" Title="Kartpostal Şehrini Seç" TextColor="White" TitleColor="#8E95A5" SelectedIndexChanged="OnCitySelected"/>
             </Border>
 
             <!-- 🎴 DİJİTAL KARTPOSTAL ÖNİZLEME ALANI -->
@@ -33,9 +33,9 @@
                                Source="https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?q=80&amp;w=1000&amp;auto=format&amp;fit=crop" 
                                Aspect="AspectFill"/>
 
-                        <!-- Gezildi Mührü (VerticalOptions="Start" olarak düzeltildi) -->
+                        <!-- Gezildi Mührü -->
                         <Border BackgroundColor="#E6D32F2F" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="10,4" HorizontalOptions="End" VerticalOptions="Start" Margin="10">
-                            <Label Text="✔ GEZGİN ONAYLI" TextColor="White" FontSize="10" FontAttributes="Bold"/>
+                            <Label x:Name="StampLabel" Text="✔ GEZGİN ONAYLI" TextColor="White" FontSize="10" FontAttributes="Bold"/>
                         </Border>
                     </Grid>
 
@@ -47,14 +47,15 @@
 
                     <!-- Alt İmza & Logo -->
                     <Grid ColumnDefinitions="*, Auto">
-                        <Label x:Name="CardDateLabel" Text="📅 21 Ağustos 2026" TextColor="#888888" FontSize="11" VerticalOptions="Center"/>
-                        <Label Grid.Column="1" Text="🇹🇷 Gezginin Rotası" TextColor="#FF7F00" FontSize="11" FontAttributes="Bold" VerticalOptions="Center"/>
+                        <Label x:Name="CardDateLabel" Text="📅 22 Ağustos 2026" TextColor="#888888" FontSize="11" VerticalOptions="Center"/>
+                        <Label Grid.Column="1" x:Name="CardBrandLabel" Text="🇹🇷 Gezginin Rotası" TextColor="#FF7F00" FontSize="11" FontAttributes="Bold" VerticalOptions="Center"/>
                     </Grid>
                 </VerticalStackLayout>
             </Border>
 
             <!-- Paylaş Butonu -->
-            <Button Text="📲 Story &amp; WhatsApp'ta Paylaş" 
+            <Button x:Name="BtnShare"
+                    Text="📲 Story &amp; WhatsApp'ta Paylaş" 
                     Clicked="OnShareClicked"
                     BackgroundColor="#FF7F00" 
                     TextColor="White" 

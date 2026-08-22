@@ -1,4 +1,4 @@
-﻿namespace GezginRotası2;
+namespace GezginRotası2;
 
 public class PassportService
 {
@@ -115,9 +115,20 @@ public class PassportService
             city.IsVisited = visitedPlates.Contains(city.PlateNumber);
         }
 
-        if (!string.IsNullOrWhiteSpace(regionFilter) && regionFilter != "Tümü")
+        // Region filter normalization
+        if (!string.IsNullOrWhiteSpace(regionFilter) && regionFilter != "Tümü" && regionFilter != "All")
         {
-            return _allCities.Where(c => c.Region == regionFilter).ToList();
+            string mappedRegion = regionFilter switch
+            {
+                "Aegean" => "Ege",
+                "Mediterranean" => "Akdeniz",
+                "Central Anatolia" => "İç Anadolu",
+                "Black Sea" => "Karadeniz",
+                "Eastern Anatolia" => "Doğu Anadolu",
+                "Southeastern" => "Güneydoğu",
+                _ => regionFilter
+            };
+            return _allCities.Where(c => c.Region == mappedRegion).ToList();
         }
 
         return _allCities.OrderBy(c => c.PlateNumber).ToList();
@@ -140,15 +151,17 @@ public class PassportService
         int count = _allCities.Count(c => c.IsVisited);
         double percentage = (double)count / 81.0;
 
+        bool isEn = LocalizationService.IsEnglish;
+
         string rank = count switch
         {
-            0 => "Yolun Başında",
-            < 5 => "Meraklı Gezgin 🎒",
-            < 15 => "Yol Kaşifi 🗺️",
-            < 30 => "Usta Seyyah 🧭",
-            < 50 => "Bölge Fatihi 🌟",
-            < 81 => "Büyük Seyyah 👑",
-            _ => "TÜRKİYE FATİHİ 🏆"
+            0 => isEn ? "Starting the Journey 🚶" : "Yolun Başında 🚶",
+            < 5 => isEn ? "Curious Explorer 🎒" : "Meraklı Gezgin 🎒",
+            < 15 => isEn ? "Route Navigator 🗺️" : "Yol Kaşifi 🗺️",
+            < 30 => isEn ? "Master Traveler 🧭" : "Usta Seyyah 🧭",
+            < 50 => isEn ? "Regional Conqueror 🌟" : "Bölge Fatihi 🌟",
+            < 81 => isEn ? "Grand Explorer 👑" : "Büyük Seyyah 👑",
+            _ => isEn ? "TURKEY CONQUEROR 🏆" : "TÜRKİYE FATİHİ 🏆"
         };
 
         return (count, percentage, rank);
@@ -162,15 +175,59 @@ public class PassportService
         int marmaraVisited = _allCities.Count(c => c.Region == "Marmara" && c.IsVisited);
         int guneydoguVisited = _allCities.Count(c => c.Region == "Güneydoğu" && c.IsVisited);
 
+        bool isEn = LocalizationService.IsEnglish;
+
         return new List<BadgeItem>
         {
-            new() { Title = "İlk Adım", Description = "İlk şehrini keşfettin!", Icon = "🎒", IsUnlocked = totalVisited >= 1 },
-            new() { Title = "Ege Aşığı", Description = "Ege'den en az 4 il gezdin", Icon = "🏖️", IsUnlocked = egeVisited >= 4 },
-            new() { Title = "Karadeniz Kaşifi", Description = "Karadeniz'den 5 il gezdin", Icon = "🏔️", IsUnlocked = karadenizVisited >= 5 },
-            new() { Title = "Metropol Seyyahı", Description = "Marmara'dan 5 il tamamlandı", Icon = "🏰", IsUnlocked = marmaraVisited >= 5 },
-            new() { Title = "Güneydoğu Gurmesi", Description = "Güneydoğu'dan 3 il gezdin", Icon = "🍖", IsUnlocked = guneydoguVisited >= 3 },
-            new() { Title = "Yarım Yüzyıl", Description = "40'tan fazla il keşfettin!", Icon = "🌟", IsUnlocked = totalVisited >= 40 },
-            new() { Title = "Türkiye Fatihi", Description = "81 ilin tamamını gezdin!", Icon = "👑", IsUnlocked = totalVisited == 81 }
+            new() 
+            { 
+                Title = isEn ? "First Step" : "İlk Adım", 
+                Description = isEn ? "Discovered your 1st city!" : "İlk şehrini keşfettin!", 
+                Icon = "🎒", 
+                IsUnlocked = totalVisited >= 1 
+            },
+            new() 
+            { 
+                Title = isEn ? "Aegean Lover" : "Ege Aşığı", 
+                Description = isEn ? "Visited 4+ Aegean cities" : "Ege'den en az 4 il gezdin", 
+                Icon = "🏖️", 
+                IsUnlocked = egeVisited >= 4 
+            },
+            new() 
+            { 
+                Title = isEn ? "Black Sea Explorer" : "Karadeniz Kaşifi", 
+                Description = isEn ? "Visited 5 Black Sea cities" : "Karadeniz'den 5 il gezdin", 
+                Icon = "🏔️", 
+                IsUnlocked = karadenizVisited >= 5 
+            },
+            new() 
+            { 
+                Title = isEn ? "Metropolis Traveler" : "Metropol Seyyahı", 
+                Description = isEn ? "Completed 5 Marmara cities" : "Marmara'dan 5 il tamamlandı", 
+                Icon = "🏰", 
+                IsUnlocked = marmaraVisited >= 5 
+            },
+            new() 
+            { 
+                Title = isEn ? "Southeast Gourmet" : "Güneydoğu Gurmesi", 
+                Description = isEn ? "Tasted 3 SE Anatolia cities" : "Güneydoğu'dan 3 il gezdin", 
+                Icon = "🍖", 
+                IsUnlocked = guneydoguVisited >= 3 
+            },
+            new() 
+            { 
+                Title = isEn ? "Half Century" : "Yarım Yüzyıl", 
+                Description = isEn ? "Explored 40+ provinces!" : "40'tan fazla il keşfettin!", 
+                Icon = "🌟", 
+                IsUnlocked = totalVisited >= 40 
+            },
+            new() 
+            { 
+                Title = isEn ? "Turkey Conqueror" : "Türkiye Fatihi", 
+                Description = isEn ? "Visited all 81 provinces!" : "81 ilin tamamını gezdin!", 
+                Icon = "👑", 
+                IsUnlocked = totalVisited == 81 
+            }
         };
     }
 }

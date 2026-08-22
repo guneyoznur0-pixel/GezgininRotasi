@@ -14,11 +14,32 @@ public partial class CityCulturePage : ContentPage
         InitializeComponent();
         _city = string.IsNullOrWhiteSpace(city) ? "Tüm Türkiye" : city;
 
-        HeaderCityLabel.Text = _city == "Tüm Türkiye"
-            ? "📍 Tüm Türkiye Kültürü & Türküleri"
-            : $"📍 {_city} Kültürü, Şahsiyetleri & Türküleri";
-
+        ApplyLocalization();
         LoadCulture();
+    }
+
+    private void ApplyLocalization()
+    {
+        bool isEn = LocalizationService.IsEnglish;
+
+        Title = LocalizationService.T("CultureTitle");
+        SongsSectionLabel.Text = LocalizationService.T("SongsSection");
+        PeopleSectionLabel.Text = LocalizationService.T("PeopleSection");
+
+        if (_city == "Tüm Türkiye" || _city == "All Turkey")
+        {
+            HeaderCityLabel.Text = isEn ? "📍 All Turkey Culture & Folk Songs" : "📍 Tüm Türkiye Kültürü & Türküleri";
+            HeaderSubtitleLabel.Text = isEn 
+                ? "Prominent figures born across Turkey & regional folk melodies" 
+                : "O topraklarda doğmuş büyük insanlar ve dinlenecek türküler";
+        }
+        else
+        {
+            HeaderCityLabel.Text = isEn ? $"📍 {_city} Culture, Figures & Songs" : $"📍 {_city} Kültürü, Şahsiyetleri & Türküleri";
+            HeaderSubtitleLabel.Text = isEn 
+                ? $"Prominent historical figures & traditional folk songs of {_city}" 
+                : $"{_city} ilimizin yetiştirdiği büyük şahsiyetler ve yöresel ezgiler";
+        }
     }
 
     private void LoadCulture()
@@ -35,13 +56,16 @@ public partial class CityCulturePage : ContentPage
         {
             try
             {
-                string search = $"{song.Title} {song.Artist} dinle";
+                string search = $"{song.Title} {song.Artist}";
                 string uri = $"https://www.youtube.com/results?search_query={Uri.EscapeDataString(search)}";
                 await Launcher.OpenAsync(new Uri(uri));
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Bilgi", $"Müzik açılamadı: {ex.Message}", "Tamam");
+                await DisplayAlert(
+                    LocalizationService.IsEnglish ? "Info" : "Bilgi", 
+                    LocalizationService.IsEnglish ? $"Could not play song: {ex.Message}" : $"Müzik açılamadı: {ex.Message}", 
+                    LocalizationService.IsEnglish ? "OK" : "Tamam");
             }
         }
     }

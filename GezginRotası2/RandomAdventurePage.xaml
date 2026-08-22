@@ -3,20 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GezginRotası2.RandomAdventurePage"
              Title="🎲 Kararsızım / Şans Çarkı"
-             BackgroundColor="#121212">
+             BackgroundColor="#0D0F15">
 
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="20" HorizontalOptions="Center" MaximumWidthRequest="450">
 
             <!-- Üst Açıklama -->
             <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
-                <Label Text="Nereye Gitsem? Ne Yesem?" TextColor="#FF7F00" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center"/>
-                <Label Text="Kararsız kaldıysan butona bas, Türkiye sana bir rota çizsin!" TextColor="#AAAAAA" FontSize="13" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                <Label x:Name="PageHeaderLabel" Text="Nereye Gitsem? Ne Yesem?" TextColor="#FF7F00" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center"/>
+                <Label x:Name="PageSubtitleLabel" Text="Kararsız kaldıysan butona bas, Türkiye sana bir rota çizsin!" TextColor="#8E95A5" FontSize="13" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
             </VerticalStackLayout>
 
             <!-- Çark / Zar İkonu (Animasyonlu) -->
             <Border x:Name="DiceBorder"
-                    BackgroundColor="#1E1E1E" 
+                    BackgroundColor="#181B24" 
                     Stroke="#FF7F00" 
                     StrokeThickness="2" 
                     StrokeShape="RoundRectangle 50" 
@@ -41,8 +41,8 @@
             <!-- SÜRPRİZ KART ALANI -->
             <Border x:Name="ResultCard" 
                     IsVisible="False"
-                    BackgroundColor="#1E1E1E" 
-                    Stroke="#333333" 
+                    BackgroundColor="#181B24" 
+                    Stroke="#262C3A" 
                     StrokeThickness="1" 
                     StrokeShape="RoundRectangle 20" 
                     Padding="20"
@@ -52,7 +52,7 @@
                     <!-- Başlık & Şehir -->
                     <Grid ColumnDefinitions="*, Auto">
                         <VerticalStackLayout Grid.Column="0" Spacing="2">
-                            <Label Text="🎉 Şansına Çıkan Şehir:" TextColor="#888888" FontSize="11"/>
+                            <Label x:Name="ResultCityTitleLabel" Text="🎉 Şansına Çıkan Şehir:" TextColor="#8E95A5" FontSize="11"/>
                             <Label x:Name="ResultCityLabel" Text="Kayseri" TextColor="White" FontSize="22" FontAttributes="Bold"/>
                         </VerticalStackLayout>
                         <Border Grid.Column="1" BackgroundColor="#FF7F00" StrokeThickness="0" StrokeShape="RoundRectangle 10" Padding="10,4" VerticalOptions="Center">
@@ -60,34 +60,36 @@
                         </Border>
                     </Grid>
 
-                    <BoxView HeightRequest="1" Color="#2A2A2A"/>
+                    <BoxView HeightRequest="1" Color="#222836"/>
 
                     <!-- Gezilecek Yer -->
                     <VerticalStackLayout Spacing="2">
-                        <Label Text="🏛️ Gezilecek Saklı Köşe" TextColor="#FF7F00" FontSize="12" FontAttributes="Bold"/>
+                        <Label x:Name="LblPlaceHeading" Text="🏛️ Gezilecek Saklı Köşe" TextColor="#FF7F00" FontSize="12" FontAttributes="Bold"/>
                         <Label x:Name="ResultPlaceLabel" Text="Erciyes Dağı &amp; Tarihi Kapalı Çarşı" TextColor="#EEEEEE" FontSize="14"/>
                     </VerticalStackLayout>
 
                     <!-- Meşhur Yemek -->
                     <VerticalStackLayout Spacing="2">
-                        <Label Text="🍲 Tadılacak Meşhur Lezzet" TextColor="#E91E63" FontSize="12" FontAttributes="Bold"/>
+                        <Label x:Name="LblFoodHeading" Text="🍲 Tadılacak Meşhur Lezzet" TextColor="#E91E63" FontSize="12" FontAttributes="Bold"/>
                         <Label x:Name="ResultFoodLabel" Text="Kayseri Yağlaması &amp; Mantı" TextColor="#EEEEEE" FontSize="14"/>
                     </VerticalStackLayout>
 
                     <!-- Dinlenecek Türkü -->
                     <VerticalStackLayout Spacing="2">
-                        <Label Text="🎶 Yol Şarkısı / Türküsü" TextColor="#3F51B5" FontSize="12" FontAttributes="Bold"/>
+                        <Label x:Name="LblSongHeading" Text="🎶 Yol Şarkısı / Türküsü" TextColor="#3F51B5" FontSize="12" FontAttributes="Bold"/>
                         <Label x:Name="ResultSongLabel" Text="Gesi Bağları - Selda Bağcan" TextColor="#EEEEEE" FontSize="14"/>
                     </VerticalStackLayout>
 
                     <!-- Hızlı Harita Butonu -->
-                    <Button Text="🗺️ Bu Şehri Google Haritalar'da Gör" 
+                    <Button x:Name="BtnMapExplore"
+                            Text="🗺️ Bu Şehri Google Haritalar'da Gör" 
                             Clicked="OnExploreCityClicked"
-                            BackgroundColor="#2D2D2D" 
+                            BackgroundColor="#222734" 
                             TextColor="#FF7F00" 
                             CornerRadius="12" 
                             HeightRequest="42" 
-                            FontSize="12"
+                            FontSize="12" 
+                            FontAttributes="Bold"
                             Margin="0,6,0,0"/>
                 </VerticalStackLayout>
             </Border>

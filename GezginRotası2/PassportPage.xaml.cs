@@ -8,6 +8,33 @@ public partial class PassportPage : ContentPage
     public PassportPage()
     {
         InitializeComponent();
+        LocalizationService.LanguageChanged += (s, e) => ApplyLocalization();
+        ApplyLocalization();
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        ApplyLocalization();
+    }
+
+    private void ApplyLocalization()
+    {
+        bool isEn = LocalizationService.IsEnglish;
+
+        Title = LocalizationService.T("PassportTitle");
+        BadgesTitleLabel.Text = LocalizationService.T("BadgesTitle");
+        Badge81Label.Text = LocalizationService.T("Passport81Count");
+
+        BtnRegAll.Text = LocalizationService.T("RegionAll");
+        BtnRegMarmara.Text = LocalizationService.T("RegionMarmara");
+        BtnRegEge.Text = LocalizationService.T("RegionEge");
+        BtnRegAkdeniz.Text = LocalizationService.T("RegionAkdeniz");
+        BtnRegIcanadolu.Text = LocalizationService.T("RegionIcanadolu");
+        BtnRegKaradeniz.Text = LocalizationService.T("RegionKaradeniz");
+        BtnRegDogu.Text = LocalizationService.T("RegionDogu");
+        BtnRegGuneydogu.Text = LocalizationService.T("RegionGuneydogu");
+
         RefreshUI();
     }
 
@@ -15,11 +42,12 @@ public partial class PassportPage : ContentPage
     {
         // 1. Şehirleri Yükle
         var cities = _passportService.LoadCities(_currentRegion);
+        CitiesCollection.ItemsSource = null;
         CitiesCollection.ItemsSource = cities;
 
         // 2. İstatistikleri Güncelle
         var (count, percentage, rank) = _passportService.GetStats();
-        StatsLabel.Text = $"{count} / 81 İl Gezildi (%{Math.Round(percentage * 100)})";
+        StatsLabel.Text = LocalizationService.Format("VisitedCitiesFormat", count, Math.Round(percentage * 100));
         RankLabel.Text = rank;
         PassportProgressBar.Progress = percentage;
 
@@ -49,7 +77,7 @@ public partial class PassportPage : ContentPage
 
             var textStack = new VerticalStackLayout { Spacing = 1 };
             textStack.Children.Add(new Label { Text = b.Title, TextColor = Colors.White, FontSize = 12, FontAttributes = FontAttributes.Bold });
-            textStack.Children.Add(new Label { Text = b.Description, TextColor = Color.FromArgb("#AAAAAA"), FontSize = 9 });
+            textStack.Children.Add(new Label { Text = b.Description, TextColor = Color.FromArgb("#A0A5B5"), FontSize = 9 });
 
             stack.Children.Add(textStack);
             border.Content = stack;
@@ -74,6 +102,19 @@ public partial class PassportPage : ContentPage
         if (sender is Button btn)
         {
             _currentRegion = btn.Text;
+
+            // Reset styles
+            BtnRegAll.BackgroundColor = Color.FromArgb("#1E2330");
+            BtnRegMarmara.BackgroundColor = Color.FromArgb("#1E2330");
+            BtnRegEge.BackgroundColor = Color.FromArgb("#1E2330");
+            BtnRegAkdeniz.BackgroundColor = Color.FromArgb("#1E2330");
+            BtnRegIcanadolu.BackgroundColor = Color.FromArgb("#1E2330");
+            BtnRegKaradeniz.BackgroundColor = Color.FromArgb("#1E2330");
+            BtnRegDogu.BackgroundColor = Color.FromArgb("#1E2330");
+            BtnRegGuneydogu.BackgroundColor = Color.FromArgb("#1E2330");
+
+            btn.BackgroundColor = Color.FromArgb("#FF7F00");
+
             RefreshUI();
         }
     }

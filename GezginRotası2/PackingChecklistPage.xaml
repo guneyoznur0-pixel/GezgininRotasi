@@ -3,15 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GezginRotası2.PackingChecklistPage"
              Title="🎒 Akıllı Valiz &amp; Çanta"
-             BackgroundColor="#121212">
+             BackgroundColor="#0D0F15">
 
     <Grid RowDefinitions="Auto, Auto, *">
 
         <!-- 1. Üst İlerleme Kartı -->
-        <Border Grid.Row="0" BackgroundColor="#1E1E1E" StrokeThickness="0" Padding="18,12">
+        <Border Grid.Row="0" BackgroundColor="#181B24" Stroke="#262C3A" StrokeThickness="1" StrokeShape="RoundRectangle 16" Padding="18,14" Margin="15,10,15,5">
             <VerticalStackLayout Spacing="6">
                 <Grid ColumnDefinitions="*, Auto">
-                    <Label Text="Valiz Hazırlık Durumu" TextColor="#FF7F00" FontSize="16" FontAttributes="Bold"/>
+                    <Label x:Name="ValizHeaderLabel" Text="Valiz Hazırlık Durumu" TextColor="#FF7F00" FontSize="16" FontAttributes="Bold"/>
                     <Label Grid.Column="1" x:Name="ProgressLabel" Text="0 / 0 (%0)" TextColor="White" FontSize="13" FontAttributes="Bold"/>
                 </Grid>
                 <ProgressBar x:Name="ValizProgressBar" Progress="0.0" ProgressColor="#4CAF50" HeightRequest="6"/>
@@ -21,19 +21,19 @@
         <!-- 2. Tatil / Mevsim Seçim Butonları -->
         <ScrollView Grid.Row="1" Orientation="Horizontal" HorizontalScrollBarVisibility="Never" Padding="15,8">
             <HorizontalStackLayout Spacing="8">
-                <Button Text="☀️ Yaz / Deniz Tatili" Clicked="OnTypeClicked" BackgroundColor="#FF7F00" TextColor="White" CornerRadius="12" HeightRequest="36" FontSize="11"/>
-                <Button Text="🍂 Şehir &amp; Kültür Gezisi" Clicked="OnTypeClicked" BackgroundColor="#222222" TextColor="#CCCCCC" CornerRadius="12" HeightRequest="36" FontSize="11"/>
-                <Button Text="❄️ Kış &amp; Kayak Tatili" Clicked="OnTypeClicked" BackgroundColor="#222222" TextColor="#CCCCCC" CornerRadius="12" HeightRequest="36" FontSize="11"/>
-                <Button Text="🏕️ Doğa &amp; Kamp" Clicked="OnTypeClicked" BackgroundColor="#222222" TextColor="#CCCCCC" CornerRadius="12" HeightRequest="36" FontSize="11"/>
+                <Button x:Name="BtnCatSummer" Text="☀️ Yaz / Deniz" Clicked="OnTypeClicked" BackgroundColor="#FF7F00" TextColor="White" CornerRadius="12" HeightRequest="36" FontSize="11" FontAttributes="Bold"/>
+                <Button x:Name="BtnCatCulture" Text="🍂 Şehir &amp; Kültür" Clicked="OnTypeClicked" BackgroundColor="#1E2330" TextColor="#CCCCCC" BorderColor="#2E3545" BorderWidth="1" CornerRadius="12" HeightRequest="36" FontSize="11"/>
+                <Button x:Name="BtnCatWinter" Text="❄️ Kış &amp; Kayak" Clicked="OnTypeClicked" BackgroundColor="#1E2330" TextColor="#CCCCCC" BorderColor="#2E3545" BorderWidth="1" CornerRadius="12" HeightRequest="36" FontSize="11"/>
+                <Button x:Name="BtnCatCamp" Text="🏕️ Doğa &amp; Kamp" Clicked="OnTypeClicked" BackgroundColor="#1E2330" TextColor="#CCCCCC" BorderColor="#2E3545" BorderWidth="1" CornerRadius="12" HeightRequest="36" FontSize="11"/>
             </HorizontalStackLayout>
         </ScrollView>
 
         <!-- 3. Eşya Listesi -->
-        <CollectionView Grid.Row="2" x:Name="ItemsCollection" Margin="15,6">
+        <CollectionView Grid.Row="2" x:Name="ItemsCollection" Margin="15,4">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Grid Padding="0,4">
-                        <Border BackgroundColor="#1A1A1A" Stroke="#2A2A2A" StrokeThickness="1" StrokeShape="RoundRectangle 12" Padding="12,10">
+                        <Border BackgroundColor="#181B24" Stroke="#262C3A" StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="14,10">
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="OnItemTapped" />
                             </Border.GestureRecognizers>

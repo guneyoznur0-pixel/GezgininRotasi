@@ -171,7 +171,20 @@ public partial class LocalDictionaryPage : ContentPage
     public LocalDictionaryPage()
     {
         InitializeComponent();
+        LocalizationService.LanguageChanged += (s, e) => ApplyLocalization();
+        ApplyLocalization();
         WordsCollection.ItemsSource = _allWords;
+    }
+
+    private void ApplyLocalization()
+    {
+        bool isEn = LocalizationService.IsEnglish;
+        Title = LocalizationService.T("DialectTitle");
+        PageTitleLabel.Text = isEn ? "🗣️ 81 Provinces Regional Dialect Atlas" : "🗣️ 81 İlin Yöresel Ağız & Deyimleri";
+        PageSubtitleLabel.Text = isEn 
+            ? "Blend in with the locals! Regional idioms, slang and expressions" 
+            : "Gittiğin şehirde yabancılık çekme, yerel halk gibi konuş!";
+        BtnFilterAll.Text = isEn ? "All" : "Tümü";
     }
 
     private void OnFilterClicked(object sender, EventArgs e)
@@ -179,7 +192,7 @@ public partial class LocalDictionaryPage : ContentPage
         if (sender is Button btn)
         {
             string regionOrCity = btn.Text;
-            if (regionOrCity == "Tümü")
+            if (regionOrCity == "Tümü" || regionOrCity == "All")
             {
                 WordsCollection.ItemsSource = _allWords;
             }

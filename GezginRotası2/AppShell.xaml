@@ -5,36 +5,36 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:GezginRotası2"
     Shell.FlyoutBehavior="Disabled"
-    Shell.TabBarBackgroundColor="#181818"
+    Shell.TabBarBackgroundColor="#141720"
     Shell.TabBarForegroundColor="#FF7F00"
-    Shell.TabBarUnselectedColor="#888888"
+    Shell.TabBarUnselectedColor="#888E9E"
     Shell.TabBarTitleColor="#FF7F00"
-    BackgroundColor="#121212">
+    BackgroundColor="#0D0F15">
 
-    <TabBar>
+    <TabBar x:Name="MainTabBar">
         <!-- 1. Sekme: Keşfet (Ana Sayfa) -->
-        <Tab Title="Keşfet">
+        <Tab x:Name="TabExplore" Title="Keşfet">
             <ShellContent Title="Keşfet"
                           ContentTemplate="{DataTemplate local:MainPage}"
                           Route="MainPage" />
         </Tab>
 
         <!-- 2. Sekme: Meşhur Lezzetler -->
-        <Tab Title="Lezzetler">
+        <Tab x:Name="TabFoods" Title="Lezzetler">
             <ShellContent Title="Lezzetler"
                           ContentTemplate="{DataTemplate local:FoodsPage}"
                           Route="FoodsPage" />
         </Tab>
 
         <!-- 3. Sekme: Gemini Gezgin AI -->
-        <Tab Title="Gezgin AI">
+        <Tab x:Name="TabAi" Title="Gezgin AI">
             <ShellContent Title="Gezgin AI"
                           ContentTemplate="{DataTemplate local:AiAssistantPage}"
                           Route="AiAssistantPage" />
         </Tab>
 
         <!-- 4. Sekme: 81 İl Pasaportum -->
-        <Tab Title="Pasaportum">
+        <Tab x:Name="TabPassport" Title="Pasaportum">
             <ShellContent Title="Pasaportum"
                           ContentTemplate="{DataTemplate local:PassportPage}"
                           Route="PassportPage" />

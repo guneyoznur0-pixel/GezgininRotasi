@@ -21,12 +21,32 @@ public partial class AiAssistantPage : ContentPage
         _currentCity = selectedCity;
         BindingContext = this;
 
-        if (!string.IsNullOrWhiteSpace(_currentCity) && _currentCity != "Tüm Türkiye")
-        {
-            CityHeaderLabel.Text = $"📍 Seçili Şehir: {_currentCity}";
-        }
+        LocalizationService.LanguageChanged += (s, e) => ApplyLocalization();
+        ApplyLocalization();
 
         _ = LoadSavedMessagesAsync();
+    }
+
+    private void ApplyLocalization()
+    {
+        bool isEn = LocalizationService.IsEnglish;
+        Title = isEn ? "🤖 AI Travel Assistant" : "🤖 Gezgin AI Asistanı";
+
+        if (string.IsNullOrWhiteSpace(_currentCity) || _currentCity == "Tüm Türkiye" || _currentCity == "All Turkey")
+        {
+            CityHeaderLabel.Text = isEn ? "📍 Assistant for All Turkey" : "📍 Tüm Türkiye İçin Asistan";
+        }
+        else
+        {
+            CityHeaderLabel.Text = isEn ? $"📍 Selected City: {_currentCity}" : $"📍 Seçili Şehir: {_currentCity}";
+        }
+
+        BtnPrompt1.Text = isEn ? "🗺️ Plan 1-Day Itinerary" : "🗺️ 1 Günlük Rota Çiz";
+        BtnPrompt2.Text = isEn ? "🍲 What to Eat? (Iconic Dishes)" : "🍲 Ne Yenir? (Meşhur Lezzetler)";
+        BtnPrompt3.Text = isEn ? "💰 Budget Travel Tips" : "💰 Bütçe Dostu Gezi";
+        BtnPrompt4.Text = isEn ? "🏛️ Secret Hidden Gems" : "🏛️ Gizli Kalmış Yerler";
+
+        MessageEntry.Placeholder = isEn ? "Ask anything about cities, foods or routes..." : "Şehir veya lezzet hakkında bir şey sorun...";
     }
 
     private async Task LoadSavedMessagesAsync()
@@ -42,12 +62,26 @@ public partial class AiAssistantPage : ContentPage
         }
         else
         {
+            bool isEn = LocalizationService.IsEnglish;
+            string welcomeText;
+
+            if (string.IsNullOrWhiteSpace(_currentCity) || _currentCity == "Tüm Türkiye" || _currentCity == "All Turkey")
+            {
+                welcomeText = isEn
+                    ? "Hello Traveler! 👋 I am your AI Travel Guide. Ask me anything about sightseeing, ancient ruins, canyons, food recommendations, and local travel tips across Turkey!"
+                    : "Merhaba Gezgin! 👋 Ben senin AI Seyahat Asistanınım. Türkiye'deki tüm şehirlerin gezilecek yerlerini ve meşhur lezzetlerini sorabilirsin!";
+            }
+            else
+            {
+                welcomeText = isEn
+                    ? $"Hello! 👋 What would you like to explore in {_currentCity}? I can plan a 1-day itinerary, recommend top authentic restaurants, and share local tips!"
+                    : $"Merhaba! 👋 {_currentCity} hakkında ne öğrenmek istersin? 1 günlük rota planlayabilir, en meşhur lezzetleri ve mekanları önerebilirim!";
+            }
+
             Messages.Add(new ChatMessage
             {
                 IsUser = false,
-                Text = string.IsNullOrWhiteSpace(_currentCity) || _currentCity == "Tüm Türkiye"
-                    ? "Merhaba Gezgin! 👋 Ben senin AI Seyahat Asistanınım. Türkiye'deki tüm şehirlerin gezilecek yerlerini ve meşhur lezzetlerini sorabilirsin!"
-                    : $"Merhaba! 👋 {_currentCity} hakkında ne öğrenmek istersin? 1 günlük rota planlayabilir, en meşhur lezzetleri ve mekanları önerebilirim!"
+                Text = welcomeText
             });
         }
     }

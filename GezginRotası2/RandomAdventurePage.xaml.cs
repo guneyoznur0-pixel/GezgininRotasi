@@ -21,6 +21,25 @@ public partial class RandomAdventurePage : ContentPage
     public RandomAdventurePage()
     {
         InitializeComponent();
+        LocalizationService.LanguageChanged += (s, e) => ApplyLocalization();
+        ApplyLocalization();
+    }
+
+    private void ApplyLocalization()
+    {
+        bool isEn = LocalizationService.IsEnglish;
+        Title = LocalizationService.T("WheelTitle");
+        PageHeaderLabel.Text = isEn ? "Where to Go? What to Eat?" : "Nereye Gitsem? Ne Yesem?";
+        PageSubtitleLabel.Text = isEn 
+            ? "Can't decide? Press the lucky spin and let Turkey plan your surprise adventure!" 
+            : "Kararsız kaldıysan butona bas, Türkiye sana bir rota çizsin!";
+        SpinButton.Text = isEn ? "✨ Pick a Surprise Route for Me!" : "✨ Bana Sürpriz Bir Rota Seç!";
+
+        ResultCityTitleLabel.Text = isEn ? "🎉 Your Lucky Destination:" : "🎉 Şansına Çıkan Şehir:";
+        LblPlaceHeading.Text = isEn ? "🏛️ Secret Spot / Must-See" : "🏛️ Gezilecek Saklı Köşe";
+        LblFoodHeading.Text = isEn ? "🍲 Iconic Dish to Taste" : "🍲 Tadılacak Meşhur Lezzet";
+        LblSongHeading.Text = isEn ? "🎶 Regional Road Song" : "🎶 Yol Şarkısı / Türküsü";
+        BtnMapExplore.Text = isEn ? "🗺️ View City in Google Maps" : "🗺️ Bu Şehri Google Haritalar'da Gör";
     }
 
     private async void OnSpinClicked(object sender, EventArgs e)
@@ -56,7 +75,8 @@ public partial class RandomAdventurePage : ContentPage
     private async void OnExploreCityClicked(object sender, EventArgs e)
     {
         string city = ResultCityLabel.Text;
-        string uri = $"https://www.google.com/maps/search/?api=1&query={Uri.EscapeDataString(city + " gezilecek yerler")}";
+        string query = LocalizationService.IsEnglish ? $"{city} Turkey attractions" : $"{city} gezilecek yerler";
+        string uri = $"https://www.google.com/maps/search/?api=1&query={Uri.EscapeDataString(query)}";
         await Launcher.OpenAsync(new Uri(uri));
     }
 }

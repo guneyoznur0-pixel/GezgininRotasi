@@ -4,13 +4,13 @@
              xmlns:local="clr-namespace:GezginRotası2"
              x:Class="GezginRotası2.PassportPage"
              Title="🇹🇷 Gezgin Pasaportu"
-             BackgroundColor="#121212">
+             BackgroundColor="#0D0F15">
 
     <Grid RowDefinitions="Auto, Auto, Auto, *">
 
         <!-- 1. Üst İlerleme Kartı (Yüzde ve Seviye) -->
         <Border Grid.Row="0" 
-                BackgroundColor="#1E1E1E" 
+                BackgroundColor="#181B24" 
                 StrokeThickness="1" 
                 Stroke="#FF7F00" 
                 StrokeShape="RoundRectangle 18" 
@@ -20,11 +20,11 @@
                 <Grid ColumnDefinitions="*, Auto">
                     <VerticalStackLayout Grid.Column="0" Spacing="2">
                         <Label x:Name="RankLabel" Text="Yolun Başında" TextColor="#FF7F00" FontSize="18" FontAttributes="Bold"/>
-                        <Label x:Name="StatsLabel" Text="0 / 81 İl Gezildi (%0)" TextColor="#AAAAAA" FontSize="13"/>
+                        <Label x:Name="StatsLabel" Text="0 / 81 İl Gezildi (%0)" TextColor="#A0A5B5" FontSize="13"/>
                     </VerticalStackLayout>
 
-                    <Border Grid.Column="1" BackgroundColor="#2D2D2D" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="10,6">
-                        <Label Text="🇹🇷 81 İl" TextColor="White" FontSize="12" FontAttributes="Bold"/>
+                    <Border Grid.Column="1" BackgroundColor="#262C3A" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="10,6">
+                        <Label x:Name="Badge81Label" Text="🇹🇷 81 İl" TextColor="White" FontSize="12" FontAttributes="Bold"/>
                     </Border>
                 </Grid>
 
@@ -34,7 +34,7 @@
 
         <!-- 2. Başarı Rozetleri (Yatay Kaydırılabilir) -->
         <VerticalStackLayout Grid.Row="1" Padding="15,8,15,2" Spacing="4">
-            <Label Text="🏆 Başarı Rozetleri" TextColor="White" FontSize="14" FontAttributes="Bold"/>
+            <Label x:Name="BadgesTitleLabel" Text="🏆 Başarı Rozetleri" TextColor="White" FontSize="14" FontAttributes="Bold"/>
             <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
                 <HorizontalStackLayout x:Name="BadgesLayout" Spacing="10" Padding="0,5"/>
             </ScrollView>
@@ -43,14 +43,14 @@
         <!-- 3. Bölge Filtre Butonları -->
         <ScrollView Grid.Row="2" Orientation="Horizontal" HorizontalScrollBarVisibility="Never" Padding="15,6">
             <HorizontalStackLayout Spacing="8">
-                <Button Text="Tümü" Clicked="OnRegionFilterClicked" BackgroundColor="#FF7F00" TextColor="White" CornerRadius="12" HeightRequest="34" FontSize="11"/>
-                <Button Text="Marmara" Clicked="OnRegionFilterClicked" BackgroundColor="#222222" TextColor="#CCCCCC" CornerRadius="12" HeightRequest="34" FontSize="11"/>
-                <Button Text="Ege" Clicked="OnRegionFilterClicked" BackgroundColor="#222222" TextColor="#CCCCCC" CornerRadius="12" HeightRequest="34" FontSize="11"/>
-                <Button Text="Akdeniz" Clicked="OnRegionFilterClicked" BackgroundColor="#222222" TextColor="#CCCCCC" CornerRadius="12" HeightRequest="34" FontSize="11"/>
-                <Button Text="İç Anadolu" Clicked="OnRegionFilterClicked" BackgroundColor="#222222" TextColor="#CCCCCC" CornerRadius="12" HeightRequest="34" FontSize="11"/>
-                <Button Text="Karadeniz" Clicked="OnRegionFilterClicked" BackgroundColor="#222222" TextColor="#CCCCCC" CornerRadius="12" HeightRequest="34" FontSize="11"/>
-                <Button Text="Doğu Anadolu" Clicked="OnRegionFilterClicked" BackgroundColor="#222222" TextColor="#CCCCCC" CornerRadius="12" HeightRequest="34" FontSize="11"/>
-                <Button Text="Güneydoğu" Clicked="OnRegionFilterClicked" BackgroundColor="#222222" TextColor="#CCCCCC" CornerRadius="12" HeightRequest="34" FontSize="11"/>
+                <Button x:Name="BtnRegAll" Text="Tümü" Clicked="OnRegionFilterClicked" BackgroundColor="#FF7F00" TextColor="White" CornerRadius="12" HeightRequest="34" FontSize="11" FontAttributes="Bold"/>
+                <Button x:Name="BtnRegMarmara" Text="Marmara" Clicked="OnRegionFilterClicked" BackgroundColor="#1E2330" TextColor="#CCCCCC" BorderColor="#2E3545" BorderWidth="1" CornerRadius="12" HeightRequest="34" FontSize="11"/>
+                <Button x:Name="BtnRegEge" Text="Ege" Clicked="OnRegionFilterClicked" BackgroundColor="#1E2330" TextColor="#CCCCCC" BorderColor="#2E3545" BorderWidth="1" CornerRadius="12" HeightRequest="34" FontSize="11"/>
+                <Button x:Name="BtnRegAkdeniz" Text="Akdeniz" Clicked="OnRegionFilterClicked" BackgroundColor="#1E2330" TextColor="#CCCCCC" BorderColor="#2E3545" BorderWidth="1" CornerRadius="12" HeightRequest="34" FontSize="11"/>
+                <Button x:Name="BtnRegIcanadolu" Text="İç Anadolu" Clicked="OnRegionFilterClicked" BackgroundColor="#1E2330" TextColor="#CCCCCC" BorderColor="#2E3545" BorderWidth="1" CornerRadius="12" HeightRequest="34" FontSize="11"/>
+                <Button x:Name="BtnRegKaradeniz" Text="Karadeniz" Clicked="OnRegionFilterClicked" BackgroundColor="#1E2330" TextColor="#CCCCCC" BorderColor="#2E3545" BorderWidth="1" CornerRadius="12" HeightRequest="34" FontSize="11"/>
+                <Button x:Name="BtnRegDogu" Text="Doğu Anadolu" Clicked="OnRegionFilterClicked" BackgroundColor="#1E2330" TextColor="#CCCCCC" BorderColor="#2E3545" BorderWidth="1" CornerRadius="12" HeightRequest="34" FontSize="11"/>
+                <Button x:Name="BtnRegGuneydogu" Text="Güneydoğu" Clicked="OnRegionFilterClicked" BackgroundColor="#1E2330" TextColor="#CCCCCC" BorderColor="#2E3545" BorderWidth="1" CornerRadius="12" HeightRequest="34" FontSize="11"/>
             </HorizontalStackLayout>
         </ScrollView>
 
@@ -61,7 +61,7 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="local:CityPassportItem">
                     <Grid Padding="0,4">
-                        <Border BackgroundColor="#1E1E1E" 
+                        <Border BackgroundColor="#181B24" 
                                 StrokeThickness="1" 
                                 Stroke="{Binding CardBorderColor}" 
                                 StrokeShape="RoundRectangle 14" 
@@ -90,12 +90,12 @@
                                 <!-- Şehir Adı ve Bölge -->
                                 <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
                                     <Label Text="{Binding Name}" TextColor="White" FontSize="16" FontAttributes="Bold"/>
-                                    <Label Text="{Binding Region}" TextColor="#888888" FontSize="11"/>
+                                    <Label Text="{Binding DisplayRegion}" TextColor="#8E95A5" FontSize="11"/>
                                 </VerticalStackLayout>
 
                                 <!-- Gezildi / Gezilecek Butonu -->
                                 <Border Grid.Column="2" 
-                                        BackgroundColor="#282828" 
+                                        BackgroundColor="#222734" 
                                         StrokeThickness="0" 
                                         StrokeShape="RoundRectangle 10" 
                                         Padding="10,6">

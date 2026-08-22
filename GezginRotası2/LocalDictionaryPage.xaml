@@ -3,29 +3,30 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:GezginRotası2"
              x:Class="GezginRotası2.LocalDictionaryPage"
-             Title="🗣️ Yöresel Şive Sözlüğü"
-             BackgroundColor="#121212">
+             Title="🗣️ Yöresel Şive Atlası"
+             BackgroundColor="#0D0F15">
 
     <Grid RowDefinitions="Auto, Auto, *">
 
         <!-- Başlık -->
-        <Border Grid.Row="0" BackgroundColor="#1E1E1E" StrokeThickness="0" Padding="20,12">
-            <VerticalStackLayout Spacing="2">
-                <Label Text="81 İlin Yöresel Ağız &amp; Deyimleri" TextColor="#FF7F00" FontSize="18" FontAttributes="Bold"/>
-                <Label Text="Gittiğin şehirde yabancılık çekme, yerel halk gibi konuş!" TextColor="#888888" FontSize="12"/>
+        <Border Grid.Row="0" BackgroundColor="#181B24" StrokeThickness="0" Padding="18,14">
+            <VerticalStackLayout Spacing="3">
+                <Label x:Name="PageTitleLabel" Text="🗣️ 81 İlin Yöresel Ağız &amp; Deyimleri" TextColor="#FF7F00" FontSize="18" FontAttributes="Bold"/>
+                <Label x:Name="PageSubtitleLabel" Text="Gittiğin şehirde yabancılık çekme, yerel halk gibi konuş!" TextColor="#8E95A5" FontSize="11"/>
             </VerticalStackLayout>
         </Border>
 
         <!-- Şehir Filtreleri -->
         <ScrollView Grid.Row="1" Orientation="Horizontal" HorizontalScrollBarVisibility="Never" Padding="15,8">
             <HorizontalStackLayout Spacing="8">
-                <Button Text="Tümü" Clicked="OnFilterClicked" BackgroundColor="#FF7F00" TextColor="White" CornerRadius="12" HeightRequest="34" FontSize="11"/>
-                <Button Text="İzmir" Clicked="OnFilterClicked" BackgroundColor="#222222" TextColor="#CCCCCC" CornerRadius="12" HeightRequest="34" FontSize="11"/>
-                <Button Text="Karadeniz" Clicked="OnFilterClicked" BackgroundColor="#222222" TextColor="#CCCCCC" CornerRadius="12" HeightRequest="34" FontSize="11"/>
-                <Button Text="Kayseri" Clicked="OnFilterClicked" BackgroundColor="#222222" TextColor="#CCCCCC" CornerRadius="12" HeightRequest="34" FontSize="11"/>
-                <Button Text="Adana" Clicked="OnFilterClicked" BackgroundColor="#222222" TextColor="#CCCCCC" CornerRadius="12" HeightRequest="34" FontSize="11"/>
-                <Button Text="Gaziantep" Clicked="OnFilterClicked" BackgroundColor="#222222" TextColor="#CCCCCC" CornerRadius="12" HeightRequest="34" FontSize="11"/>
-                <Button Text="Erzurum" Clicked="OnFilterClicked" BackgroundColor="#222222" TextColor="#CCCCCC" CornerRadius="12" HeightRequest="34" FontSize="11"/>
+                <Button x:Name="BtnFilterAll" Text="Tümü" Clicked="OnFilterClicked" BackgroundColor="#FF7F00" TextColor="White" CornerRadius="12" HeightRequest="34" FontSize="11" FontAttributes="Bold"/>
+                <Button Text="İzmir" Clicked="OnFilterClicked" BackgroundColor="#1E2330" TextColor="#CCCCCC" BorderColor="#2E3545" BorderWidth="1" CornerRadius="12" HeightRequest="34" FontSize="11"/>
+                <Button Text="Karadeniz" Clicked="OnFilterClicked" BackgroundColor="#1E2330" TextColor="#CCCCCC" BorderColor="#2E3545" BorderWidth="1" CornerRadius="12" HeightRequest="34" FontSize="11"/>
+                <Button Text="Kayseri" Clicked="OnFilterClicked" BackgroundColor="#1E2330" TextColor="#CCCCCC" BorderColor="#2E3545" BorderWidth="1" CornerRadius="12" HeightRequest="34" FontSize="11"/>
+                <Button Text="Adana" Clicked="OnFilterClicked" BackgroundColor="#1E2330" TextColor="#CCCCCC" BorderColor="#2E3545" BorderWidth="1" CornerRadius="12" HeightRequest="34" FontSize="11"/>
+                <Button Text="Gaziantep" Clicked="OnFilterClicked" BackgroundColor="#1E2330" TextColor="#CCCCCC" BorderColor="#2E3545" BorderWidth="1" CornerRadius="12" HeightRequest="34" FontSize="11"/>
+                <Button Text="Erzurum" Clicked="OnFilterClicked" BackgroundColor="#1E2330" TextColor="#CCCCCC" BorderColor="#2E3545" BorderWidth="1" CornerRadius="12" HeightRequest="34" FontSize="11"/>
+                <Button Text="Trabzon" Clicked="OnFilterClicked" BackgroundColor="#1E2330" TextColor="#CCCCCC" BorderColor="#2E3545" BorderWidth="1" CornerRadius="12" HeightRequest="34" FontSize="11"/>
             </HorizontalStackLayout>
         </ScrollView>
 
@@ -36,19 +37,19 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="local:DialectWord">
                     <Grid Padding="0,5">
-                        <Border BackgroundColor="#1E1E1E" Stroke="#2A2A2A" StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="16">
+                        <Border BackgroundColor="#181B24" Stroke="#262C3A" StrokeThickness="1" StrokeShape="RoundRectangle 16" Padding="16">
                             <VerticalStackLayout Spacing="6">
                                 <Grid ColumnDefinitions="*, Auto">
                                     <Label Grid.Column="0" Text="{Binding Word}" TextColor="White" FontSize="18" FontAttributes="Bold"/>
-                                    <Border Grid.Column="1" BackgroundColor="#333333" StrokeThickness="0" StrokeShape="RoundRectangle 6" Padding="8,3">
+                                    <Border Grid.Column="1" BackgroundColor="#222734" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="8,3">
                                         <Label Text="{Binding City}" TextColor="#FF7F00" FontSize="11" FontAttributes="Bold"/>
                                     </Border>
                                 </Grid>
 
                                 <Label Text="{Binding Meaning}" TextColor="#FFD700" FontSize="13" FontAttributes="Bold"/>
 
-                                <Border BackgroundColor="#161616" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="10,6">
-                                    <Label Text="{Binding Example}" TextColor="#AAAAAA" FontSize="12" FontAttributes="Italic"/>
+                                <Border BackgroundColor="#12141C" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="10,6">
+                                    <Label Text="{Binding Example}" TextColor="#A0A5B5" FontSize="12" FontAttributes="Italic"/>
                                 </Border>
                             </VerticalStackLayout>
                         </Border>
