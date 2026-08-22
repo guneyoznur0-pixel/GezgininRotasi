@@ -1,14 +1,78 @@
-﻿namespace GezginRotası2;
+namespace GezginRotası2;
 
 public partial class MainPage : ContentPage
 {
+    private List<string> _allCities = new();
+
     public MainPage()
     {
         InitializeComponent();
 
-        // 81 İlin tamamını ve 'Tüm Türkiye' seçeneğini otomatik yükler
-        CityPicker.ItemsSource = CityDatabase.AllCitiesWithAll;
+        _allCities = CityDatabase.AllCitiesWithAll;
+        CityPicker.ItemsSource = _allCities;
         CityPicker.SelectedIndex = 0;
+
+        // Dil Değişikliği Dinleyicisi
+        LocalizationService.LanguageChanged += OnLanguageChanged;
+        ApplyLocalization();
+    }
+
+    private void OnLanguageToggleTapped(object sender, EventArgs e)
+    {
+        LocalizationService.ToggleLanguage();
+    }
+
+    private void OnLanguageChanged(object? sender, EventArgs e)
+    {
+        ApplyLocalization();
+    }
+
+    private void ApplyLocalization()
+    {
+        LblAppTitle.Text = LocalizationService.T("AppTitle");
+        LblAppSubtitle.Text = LocalizationService.T("AppSubtitle");
+        LblLanguageBadge.Text = LocalizationService.T("LanguageBadge");
+        CitySearchBar.Placeholder = LocalizationService.T("SearchPlaceholder");
+        CityPicker.Title = LocalizationService.T("SelectCity");
+
+        LblAiTitle.Text = LocalizationService.T("AiTitle");
+        LblAiSubtitle.Text = LocalizationService.T("AiSubtitle");
+
+        BtnWheel.Text = LocalizationService.T("ToolWheel");
+        BtnDialect.Text = LocalizationService.T("ToolDialect");
+        BtnPacking.Text = LocalizationService.T("ToolPacking");
+        BtnPostcard.Text = LocalizationService.T("ToolPostcard");
+
+        LblMenuSights.Text = LocalizationService.T("MenuSights");
+        LblMenuMuseums.Text = LocalizationService.T("MenuMuseums");
+        LblMenuFoods.Text = LocalizationService.T("MenuFoods");
+        LblMenuCulture.Text = LocalizationService.T("MenuCulture");
+        LblMenuDiary.Text = LocalizationService.T("MenuDiary");
+        LblMenuPassport.Text = LocalizationService.T("MenuPassport");
+    }
+
+    private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
+    {
+        string filter = e.NewTextValue?.Trim() ?? "";
+        if (string.IsNullOrWhiteSpace(filter))
+        {
+            CityPicker.ItemsSource = _allCities;
+            CityPicker.SelectedIndex = 0;
+        }
+        else
+        {
+            var filtered = _allCities.Where(c => c.Contains(filter, StringComparison.OrdinalIgnoreCase)).ToList();
+            if (filtered.Count > 0)
+            {
+                CityPicker.ItemsSource = filtered;
+                CityPicker.SelectedIndex = 0;
+            }
+        }
+    }
+
+    private void OnCityPickerChanged(object sender, EventArgs e)
+    {
+        // Şehir seçildiğinde işlem yapılabilir
     }
 
     // 🤖 Yapay Zeka Asistanı

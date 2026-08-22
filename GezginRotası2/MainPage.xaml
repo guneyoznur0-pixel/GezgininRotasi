@@ -1,130 +1,179 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GezginRotası2.MainPage"
              Shell.NavBarIsVisible="False"
-             BackgroundColor="Black">
+             BackgroundColor="#0D0F15">
 
     <Grid>
-        <!-- Arka Plan Görseli -->
+        <!-- Arka Plan Hafif Gradient & Doğa Görseli -->
         <Image Source="https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?q=80&amp;w=2071&amp;auto=format&amp;fit=crop"
                Aspect="AspectFill"
+               Opacity="0.25"
                HorizontalOptions="Fill"
                VerticalOptions="Fill" />
 
-        <BoxView Color="#90000000" />
-
         <ScrollView>
-            <VerticalStackLayout Spacing="16" Padding="20,15,20,30">
+            <VerticalStackLayout Spacing="18" Padding="20,25,20,35">
 
-                <!-- Arama Çubuğu -->
-                <Frame BackgroundColor="White" Padding="2" CornerRadius="20" HasShadow="True">
-                    <SearchBar Placeholder="Nereye gitmek istersiniz?" PlaceholderColor="Gray" TextColor="Black" BackgroundColor="Transparent" />
-                </Frame>
+                <!-- 🌟 1. ÜST BAR: BAŞLIK & DİL DEĞİŞTİRME BUTONU -->
+                <Grid ColumnDefinitions="*, Auto" VerticalOptions="Center">
+                    <VerticalStackLayout Grid.Column="0" Spacing="2">
+                        <Label x:Name="LblAppTitle" Text="🧭 Gezginin Rotası" TextColor="White" FontSize="22" FontAttributes="Bold"/>
+                        <Label x:Name="LblAppSubtitle" Text="81 İlin Kültür, Doğa &amp; Lezzet Rehberi" TextColor="#A0A5B5" FontSize="11"/>
+                    </VerticalStackLayout>
 
-                <!-- Şehir Seçim Menüsü -->
-                <Frame BackgroundColor="#40FFFFFF" CornerRadius="15" Padding="10,0" HasShadow="False">
-                    <Picker x:Name="CityPicker" Title="📍 Gezeceğiniz Şehri Seçin" TitleColor="White" TextColor="White" HorizontalOptions="Center" />
-                </Frame>
+                    <!-- Dil Seçici (🇹🇷 TR / 🇬🇧 EN) Rozeti -->
+                    <Border Grid.Column="1" 
+                            BackgroundColor="#1F2430" 
+                            Stroke="#FF7F00" 
+                            StrokeThickness="1.2" 
+                            StrokeShape="RoundRectangle 16" 
+                            Padding="10,6">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnLanguageToggleTapped" />
+                        </Border.GestureRecognizers>
+                        <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                            <Label x:Name="LblLanguageBadge" Text="🇹🇷 TR" TextColor="#FF7F00" FontSize="12" FontAttributes="Bold"/>
+                            <Label Text="⇄" TextColor="#888888" FontSize="12"/>
+                        </HorizontalStackLayout>
+                    </Border>
+                </Grid>
 
-                <!-- 🤖 GEMINI YAPAY ZEKA ASİSTANI KARTI -->
-                <Border BackgroundColor="#E61E1E1E" Stroke="#FF7F00" StrokeThickness="1.5" StrokeShape="RoundRectangle 16" Padding="12" HorizontalOptions="Fill">
+                <!-- 🔍 2. ŞEHİR SEÇİM & ARAMA KARTI -->
+                <Border BackgroundColor="#181B24" Stroke="#262B38" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="14,10">
+                    <VerticalStackLayout Spacing="8">
+                        <SearchBar x:Name="CitySearchBar"
+                                   Placeholder="Nereye gitmek istersiniz?" 
+                                   PlaceholderColor="#707688" 
+                                   TextColor="White" 
+                                   BackgroundColor="Transparent"
+                                   CancelButtonColor="#FF7F00"
+                                   TextChanged="OnSearchTextChanged"/>
+
+                        <Border BackgroundColor="#222734" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="10,2">
+                            <Picker x:Name="CityPicker" 
+                                    Title="📍 Gezeceğiniz Şehri Seçin" 
+                                    TitleColor="#FF7F00" 
+                                    TextColor="White" 
+                                    HorizontalOptions="FillAndExpand"
+                                    SelectedIndexChanged="OnCityPickerChanged"/>
+                        </Border>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- 🤖 3. MODERN GEMINI YAPAY ZEKA ASİSTANI KARTI -->
+                <Border BackgroundColor="#1A1E29" Stroke="#FF7F00" StrokeThickness="1.2" StrokeShape="RoundRectangle 18" Padding="14">
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnAiAssistantClicked" />
                     </Border.GestureRecognizers>
 
-                    <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="12" VerticalOptions="Center">
-                        <Border Grid.Column="0" BackgroundColor="#FF7F00" StrokeShape="RoundRectangle 22" WidthRequest="44" HeightRequest="44" StrokeThickness="0">
-                            <Label Text="🤖" FontSize="22" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="14" VerticalOptions="Center">
+                        <Border Grid.Column="0" BackgroundColor="#FF7F00" StrokeShape="RoundRectangle 14" WidthRequest="46" HeightRequest="46" StrokeThickness="0">
+                            <Label Text="🤖" FontSize="24" HorizontalOptions="Center" VerticalOptions="Center"/>
                         </Border>
 
-                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="1">
-                            <Label Text="Yapay Zeka Gezgin Asistanı" TextColor="White" FontAttributes="Bold" FontSize="15"/>
-                            <Label Text="Rota çiz, ne yenir sor veya bütçe planla!" TextColor="#CCCCCC" FontSize="11"/>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                            <Label x:Name="LblAiTitle" Text="Yapay Zeka Gezgin Asistanı" TextColor="White" FontAttributes="Bold" FontSize="15"/>
+                            <Label x:Name="LblAiSubtitle" Text="Rota çiz, ne yenir sor veya bütçe planla!" TextColor="#A0A5B5" FontSize="11"/>
                         </VerticalStackLayout>
 
-                        <Label Grid.Column="2" Text="➔" TextColor="#FF7F00" FontSize="18" FontAttributes="Bold" VerticalOptions="Center"/>
+                        <Border Grid.Column="2" BackgroundColor="#2A2F3D" StrokeShape="RoundRectangle 20" WidthRequest="32" HeightRequest="32" StrokeThickness="0">
+                            <Label Text="➔" TextColor="#FF7F00" FontSize="14" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
                     </Grid>
                 </Border>
 
-                <!-- ✨ ÖZEL GEZGİN ARAÇLARI (YATAY MENÜ) -->
+                <!-- 🚀 4. HIZLI GEZGİN ARAÇLARI (YATAY MODERN CHIPS) -->
                 <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
-                    <HorizontalStackLayout Spacing="8">
-                        <Button Text="🎲 Şans Çarkı / Kararsızım" Clicked="OnSansCarkiClicked" BackgroundColor="#FF9800" TextColor="White" FontAttributes="Bold" CornerRadius="12" HeightRequest="38" FontSize="12"/>
-                        <Button Text="🗣️ Şive Sözlüğü" Clicked="OnSiveSozluguClicked" BackgroundColor="#009688" TextColor="White" FontAttributes="Bold" CornerRadius="12" HeightRequest="38" FontSize="12"/>
-                        <Button Text="🎒 Akıllı Valiz Listesi" Clicked="OnValizClicked" BackgroundColor="#4CAF50" TextColor="White" FontAttributes="Bold" CornerRadius="12" HeightRequest="38" FontSize="12"/>
-                        <Button Text="📸 Kartpostal Paylaş" Clicked="OnKartpostalClicked" BackgroundColor="#E91E63" TextColor="White" FontAttributes="Bold" CornerRadius="12" HeightRequest="38" FontSize="12"/>
+                    <HorizontalStackLayout Spacing="10">
+                        <Button x:Name="BtnWheel" Text="🎲 Şans Çarkı" Clicked="OnSansCarkiClicked" BackgroundColor="#1E2330" TextColor="#FFB300" BorderColor="#353D50" BorderWidth="1" FontAttributes="Bold" CornerRadius="14" HeightRequest="38" FontSize="12"/>
+                        <Button x:Name="BtnDialect" Text="🗣️ Şive Sözlüğü" Clicked="OnSiveSozluguClicked" BackgroundColor="#1E2330" TextColor="#00BFA5" BorderColor="#353D50" BorderWidth="1" FontAttributes="Bold" CornerRadius="14" HeightRequest="38" FontSize="12"/>
+                        <Button x:Name="BtnPacking" Text="🎒 Akıllı Valiz" Clicked="OnValizClicked" BackgroundColor="#1E2330" TextColor="#66BB6A" BorderColor="#353D50" BorderWidth="1" FontAttributes="Bold" CornerRadius="14" HeightRequest="38" FontSize="12"/>
+                        <Button x:Name="BtnPostcard" Text="📸 Kartpostal" Clicked="OnKartpostalClicked" BackgroundColor="#1E2330" TextColor="#FF4081" BorderColor="#353D50" BorderWidth="1" FontAttributes="Bold" CornerRadius="14" HeightRequest="38" FontSize="12"/>
                     </HorizontalStackLayout>
                 </ScrollView>
 
-                <!-- 6'LI ANA KONTROL PANELİ -->
+                <!-- 🏛️ 5. ANA KEŞİF KARTLARI (6'LI MODERN GRID) -->
                 <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="12" RowSpacing="12">
 
                     <!-- 1. Gezilecek Yerler -->
-                    <Frame Grid.Row="0" Grid.Column="0" BackgroundColor="#CCFF7F00" HasShadow="True" CornerRadius="18" Padding="14">
-                        <Frame.GestureRecognizers>
+                    <Border Grid.Row="0" Grid.Column="0" BackgroundColor="#181B24" Stroke="#2A3040" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="14">
+                        <Border.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnGezilecekYerlerTapped" />
-                        </Frame.GestureRecognizers>
-                        <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
-                            <Label Text="🏛️" FontSize="28" HorizontalOptions="Center"/>
-                            <Label Text="Gezilecek" TextColor="White" FontAttributes="Bold" FontSize="14" HorizontalOptions="Center"/>
+                        </Border.GestureRecognizers>
+                        <VerticalStackLayout HorizontalOptions="Center" Spacing="6">
+                            <Border BackgroundColor="#2A2218" StrokeShape="RoundRectangle 14" WidthRequest="44" HeightRequest="44" StrokeThickness="0">
+                                <Label Text="🏛️" FontSize="22" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <Label x:Name="LblMenuSights" Text="Gezilecek" TextColor="White" FontAttributes="Bold" FontSize="13" HorizontalOptions="Center"/>
                         </VerticalStackLayout>
-                    </Frame>
+                    </Border>
 
                     <!-- 2. Müzeler -->
-                    <Frame Grid.Row="0" Grid.Column="1" BackgroundColor="#CC00BCD4" HasShadow="True" CornerRadius="18" Padding="14">
-                        <Frame.GestureRecognizers>
+                    <Border Grid.Row="0" Grid.Column="1" BackgroundColor="#181B24" Stroke="#2A3040" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="14">
+                        <Border.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnMuzelerTapped" />
-                        </Frame.GestureRecognizers>
-                        <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
-                            <Label Text="🏺" FontSize="28" HorizontalOptions="Center"/>
-                            <Label Text="Müzeler" TextColor="White" FontAttributes="Bold" FontSize="14" HorizontalOptions="Center"/>
+                        </Border.GestureRecognizers>
+                        <VerticalStackLayout HorizontalOptions="Center" Spacing="6">
+                            <Border BackgroundColor="#14262E" StrokeShape="RoundRectangle 14" WidthRequest="44" HeightRequest="44" StrokeThickness="0">
+                                <Label Text="🏺" FontSize="22" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <Label x:Name="LblMenuMuseums" Text="Müzeler" TextColor="White" FontAttributes="Bold" FontSize="13" HorizontalOptions="Center"/>
                         </VerticalStackLayout>
-                    </Frame>
+                    </Border>
 
                     <!-- 3. Ne Yenir? -->
-                    <Frame Grid.Row="1" Grid.Column="0" BackgroundColor="#CCE91E63" HasShadow="True" CornerRadius="18" Padding="14">
-                        <Frame.GestureRecognizers>
+                    <Border Grid.Row="1" Grid.Column="0" BackgroundColor="#181B24" Stroke="#2A3040" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="14">
+                        <Border.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnLezzetlerTapped" />
-                        </Frame.GestureRecognizers>
-                        <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
-                            <Label Text="🍲" FontSize="28" HorizontalOptions="Center"/>
-                            <Label Text="Ne Yenir?" TextColor="White" FontAttributes="Bold" FontSize="14" HorizontalOptions="Center"/>
+                        </Border.GestureRecognizers>
+                        <VerticalStackLayout HorizontalOptions="Center" Spacing="6">
+                            <Border BackgroundColor="#2D1922" StrokeShape="RoundRectangle 14" WidthRequest="44" HeightRequest="44" StrokeThickness="0">
+                                <Label Text="🍲" FontSize="22" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <Label x:Name="LblMenuFoods" Text="Ne Yenir?" TextColor="White" FontAttributes="Bold" FontSize="13" HorizontalOptions="Center"/>
                         </VerticalStackLayout>
-                    </Frame>
+                    </Border>
 
                     <!-- 4. Şarkılar & Kültür -->
-                    <Frame Grid.Row="1" Grid.Column="1" BackgroundColor="#CC3F51B5" HasShadow="True" CornerRadius="18" Padding="14">
-                        <Frame.GestureRecognizers>
+                    <Border Grid.Row="1" Grid.Column="1" BackgroundColor="#181B24" Stroke="#2A3040" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="14">
+                        <Border.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnKulturTapped" />
-                        </Frame.GestureRecognizers>
-                        <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
-                            <Label Text="🎧" FontSize="28" HorizontalOptions="Center"/>
-                            <Label Text="Şarkılar &amp; Kültür" TextColor="White" FontAttributes="Bold" FontSize="14" HorizontalOptions="Center"/>
+                        </Border.GestureRecognizers>
+                        <VerticalStackLayout HorizontalOptions="Center" Spacing="6">
+                            <Border BackgroundColor="#1C1E30" StrokeShape="RoundRectangle 14" WidthRequest="44" HeightRequest="44" StrokeThickness="0">
+                                <Label Text="🎧" FontSize="22" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <Label x:Name="LblMenuCulture" Text="Şarkılar &amp; Kültür" TextColor="White" FontAttributes="Bold" FontSize="13" HorizontalOptions="Center"/>
                         </VerticalStackLayout>
-                    </Frame>
+                    </Border>
 
                     <!-- 5. Günlüğüm -->
-                    <Frame Grid.Row="2" Grid.Column="0" BackgroundColor="#CC4CAF50" HasShadow="True" CornerRadius="18" Padding="14">
-                        <Frame.GestureRecognizers>
+                    <Border Grid.Row="2" Grid.Column="0" BackgroundColor="#181B24" Stroke="#2A3040" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="14">
+                        <Border.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnGunlukTapped" />
-                        </Frame.GestureRecognizers>
-                        <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
-                            <Label Text="📓" FontSize="28" HorizontalOptions="Center"/>
-                            <Label Text="Günlüğüm" TextColor="White" FontAttributes="Bold" FontSize="14" HorizontalOptions="Center"/>
+                        </Border.GestureRecognizers>
+                        <VerticalStackLayout HorizontalOptions="Center" Spacing="6">
+                            <Border BackgroundColor="#16291C" StrokeShape="RoundRectangle 14" WidthRequest="44" HeightRequest="44" StrokeThickness="0">
+                                <Label Text="📓" FontSize="22" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <Label x:Name="LblMenuDiary" Text="Günlüğüm" TextColor="White" FontAttributes="Bold" FontSize="13" HorizontalOptions="Center"/>
                         </VerticalStackLayout>
-                    </Frame>
+                    </Border>
 
                     <!-- 6. Pasaportum -->
-                    <Frame Grid.Row="2" Grid.Column="1" BackgroundColor="#CC9C27B0" HasShadow="True" CornerRadius="18" Padding="14">
-                        <Frame.GestureRecognizers>
+                    <Border Grid.Row="2" Grid.Column="1" BackgroundColor="#181B24" Stroke="#2A3040" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="14">
+                        <Border.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnPasaportTapped" />
-                        </Frame.GestureRecognizers>
-                        <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
-                            <Label Text="🇹🇷" FontSize="28" HorizontalOptions="Center"/>
-                            <Label Text="Pasaportum" TextColor="White" FontAttributes="Bold" FontSize="14" HorizontalOptions="Center"/>
+                        </Border.GestureRecognizers>
+                        <VerticalStackLayout HorizontalOptions="Center" Spacing="6">
+                            <Border BackgroundColor="#2A182E" StrokeShape="RoundRectangle 14" WidthRequest="44" HeightRequest="44" StrokeThickness="0">
+                                <Label Text="🇹🇷" FontSize="22" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <Label x:Name="LblMenuPassport" Text="Pasaportum" TextColor="White" FontAttributes="Bold" FontSize="13" HorizontalOptions="Center"/>
                         </VerticalStackLayout>
-                    </Frame>
+                    </Border>
 
                 </Grid>
 

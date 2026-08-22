@@ -4,54 +4,56 @@
              xmlns:local="clr-namespace:GezginRotası2"
              x:Class="GezginRotası2.FoodsPage"
              Title="🍲 Meşhur Lezzetler"
-             BackgroundColor="#121212">
+             BackgroundColor="#0D0F15">
 
     <Grid RowDefinitions="Auto, Auto, *">
 
-        <!-- Başlık ve Şehir Bilgisi -->
-        <VerticalStackLayout Grid.Row="0" Padding="20,15,20,5" Spacing="4">
-            <Label x:Name="CityTitleLabel" 
-                   Text="📍 Tüm Türkiye Lezzetleri" 
-                   TextColor="#FF7F00" 
-                   FontSize="18" 
-                   FontAttributes="Bold"/>
-            <Label Text="O yöreye ait en meşhur lezzetler ve mekan tavsiyeleri" 
-                   TextColor="#888888" 
-                   FontSize="12"/>
-        </VerticalStackLayout>
+        <!-- 1. Başlık ve Şehir Bilgisi -->
+        <Border Grid.Row="0" BackgroundColor="#151922" StrokeThickness="0" Padding="18,14">
+            <VerticalStackLayout Spacing="3">
+                <Label x:Name="CityTitleLabel" 
+                       Text="📍 Tüm Türkiye Lezzetleri" 
+                       TextColor="#FF7F00" 
+                       FontSize="18" 
+                       FontAttributes="Bold"/>
+                <Label x:Name="CitySubtitleLabel"
+                       Text="O yöreye ait en meşhur imza lezzetler ve restoran tavsiyeleri" 
+                       TextColor="#8E95A5" 
+                       FontSize="11"/>
+            </VerticalStackLayout>
+        </Border>
 
-        <!-- Kategori Filtre Butonları -->
+        <!-- 2. Modern Kategori Filtre Chips -->
         <ScrollView Grid.Row="1" Orientation="Horizontal" HorizontalScrollBarVisibility="Never" Padding="15,10">
             <HorizontalStackLayout Spacing="8">
-                <Button Text="Tümü" Clicked="OnCategoryFilterClicked" BackgroundColor="#FF7F00" TextColor="White" CornerRadius="12" HeightRequest="36" FontSize="12"/>
-                <Button Text="Ana Yemek" Clicked="OnCategoryFilterClicked" BackgroundColor="#252525" TextColor="#CCCCCC" CornerRadius="12" HeightRequest="36" FontSize="12"/>
-                <Button Text="Tatlı" Clicked="OnCategoryFilterClicked" BackgroundColor="#252525" TextColor="#CCCCCC" CornerRadius="12" HeightRequest="36" FontSize="12"/>
-                <Button Text="Sokak Lezzeti" Clicked="OnCategoryFilterClicked" BackgroundColor="#252525" TextColor="#CCCCCC" CornerRadius="12" HeightRequest="36" FontSize="12"/>
-                <Button Text="Kahvaltılık" Clicked="OnCategoryFilterClicked" BackgroundColor="#252525" TextColor="#CCCCCC" CornerRadius="12" HeightRequest="36" FontSize="12"/>
+                <Button x:Name="BtnFoodAll" Text="Tümü" Clicked="OnCategoryFilterClicked" BackgroundColor="#FF7F00" TextColor="White" CornerRadius="12" HeightRequest="36" FontSize="12" FontAttributes="Bold"/>
+                <Button x:Name="BtnFoodMain" Text="Ana Yemek" Clicked="OnCategoryFilterClicked" BackgroundColor="#1E2330" TextColor="#CCCCCC" BorderColor="#2E3545" BorderWidth="1" CornerRadius="12" HeightRequest="36" FontSize="12"/>
+                <Button x:Name="BtnFoodDessert" Text="Tatlı" Clicked="OnCategoryFilterClicked" BackgroundColor="#1E2330" TextColor="#CCCCCC" BorderColor="#2E3545" BorderWidth="1" CornerRadius="12" HeightRequest="36" FontSize="12"/>
+                <Button x:Name="BtnFoodStreet" Text="Sokak Lezzeti" Clicked="OnCategoryFilterClicked" BackgroundColor="#1E2330" TextColor="#CCCCCC" BorderColor="#2E3545" BorderWidth="1" CornerRadius="12" HeightRequest="36" FontSize="12"/>
+                <Button x:Name="BtnFoodBreakfast" Text="Kahvaltılık" Clicked="OnCategoryFilterClicked" BackgroundColor="#1E2330" TextColor="#CCCCCC" BorderColor="#2E3545" BorderWidth="1" CornerRadius="12" HeightRequest="36" FontSize="12"/>
             </HorizontalStackLayout>
         </ScrollView>
 
-        <!-- Lezzet Kartları Listesi -->
+        <!-- 3. Lezzet Kartları Listesi -->
         <CollectionView Grid.Row="2" 
                         x:Name="FoodsCollection"
-                        Margin="15,5,15,15">
+                        Margin="15,4,15,15">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="local:FoodItem">
-                    <Grid Padding="0,8">
-                        <Border BackgroundColor="#1E1E1E" 
-                                StrokeThickness="0" 
+                    <Grid Padding="0,6">
+                        <Border BackgroundColor="#181B24" 
+                                Stroke="#262C3A" 
+                                StrokeThickness="1" 
                                 StrokeShape="RoundRectangle 18">
 
                             <VerticalStackLayout Spacing="0">
 
                                 <!-- Yemek Görseli & Rozetler -->
-                                <Grid HeightRequest="190">
+                                <Grid HeightRequest="180">
                                     <Image Source="{Binding ImageUrl}" 
                                            Aspect="AspectFill" 
                                            HorizontalOptions="Fill" 
                                            VerticalOptions="Fill"/>
-
-                                    <BoxView Color="#35000000"/>
 
                                     <!-- Kategori & Şehir Rozeti -->
                                     <HorizontalStackLayout HorizontalOptions="Start" VerticalOptions="Start" Margin="12" Spacing="6">
@@ -67,41 +69,42 @@
                                     <Border BackgroundColor="#E6000000" StrokeThickness="0" StrokeShape="RoundRectangle 10" Padding="8,4" HorizontalOptions="End" VerticalOptions="Start" Margin="12">
                                         <HorizontalStackLayout Spacing="4">
                                             <Label Text="⭐" FontSize="11"/>
-                                            <Label Text="{Binding Rating}" TextColor="#FFD700" FontAttributes="Bold" FontSize="12"/>
+                                            <Label Text="{Binding Rating, StringFormat='{0:F1}'}" TextColor="#FFD700" FontAttributes="Bold" FontSize="11"/>
                                         </HorizontalStackLayout>
                                     </Border>
                                 </Grid>
 
                                 <!-- Açıklama ve Nerede Yenir Alanı -->
-                                <VerticalStackLayout Padding="16" Spacing="10">
+                                <VerticalStackLayout Padding="14" Spacing="8">
                                     <Label Text="{Binding Name}" 
                                            TextColor="White" 
-                                           FontSize="19" 
+                                           FontSize="17" 
                                            FontAttributes="Bold"/>
 
                                     <Label Text="{Binding Description}" 
-                                           TextColor="#CCCCCC" 
-                                           FontSize="13" 
+                                           TextColor="#A0A5B5" 
+                                           FontSize="12" 
                                            LineHeight="1.3"/>
 
-                                    <BoxView HeightRequest="1" Color="#2E2E2E" Margin="0,4"/>
+                                    <BoxView HeightRequest="1" Color="#222836" Margin="0,4"/>
 
-                                    <!-- Nerede Yenir Tavsiyesi -->
+                                    <!-- Nerede Yenir Tavsiyesi & Harita -->
                                     <Grid ColumnDefinitions="*, Auto" VerticalOptions="Center">
                                         <VerticalStackLayout Grid.Column="0" Spacing="2">
-                                            <Label Text="🍴 Nerede Yenir?" TextColor="#FF7F00" FontSize="12" FontAttributes="Bold"/>
-                                            <Label Text="{Binding WhereToEat}" TextColor="#FFFFFF" FontSize="13"/>
+                                            <Label Text="🍴 Tavsiye Mekanlar:" TextColor="#FF7F00" FontSize="11" FontAttributes="Bold"/>
+                                            <Label Text="{Binding WhereToEat}" TextColor="#FFFFFF" FontSize="12" LineHeight="1.2"/>
                                         </VerticalStackLayout>
 
                                         <!-- Haritada Ara Butonu -->
                                         <Button Grid.Column="1" 
-                                                Text="📍 Yol Tarifi" 
+                                                Text="📍 Harita" 
                                                 Clicked="OnOpenMapClicked"
-                                                BackgroundColor="#2D2D2D" 
-                                                TextColor="#FF7F00" 
+                                                BackgroundColor="#FF7F00" 
+                                                TextColor="White" 
+                                                FontAttributes="Bold"
                                                 CornerRadius="10" 
                                                 FontSize="11" 
-                                                HeightRequest="36"
+                                                HeightRequest="34"
                                                 Padding="10,0"/>
                                     </Grid>
                                 </VerticalStackLayout>

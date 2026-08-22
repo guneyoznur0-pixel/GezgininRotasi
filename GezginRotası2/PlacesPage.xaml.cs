@@ -16,16 +16,43 @@ public partial class PlacesPage : ContentPage
         _city = string.IsNullOrWhiteSpace(selectedCity) ? "Tüm Türkiye" : selectedCity;
         _currentCategory = string.IsNullOrWhiteSpace(category) ? "Tümü" : category;
 
-        PageTitleLabel.Text = _city == "Tüm Türkiye"
-            ? "📍 Tüm Türkiye Gezilecek Yerler & Müzeler"
-            : $"📍 {_city} Gezilecek Yerler & Müzeler";
-
+        ApplyLocalization();
         LoadPlaces();
+    }
+
+    private void ApplyLocalization()
+    {
+        bool isEn = LocalizationService.IsEnglish;
+
+        BtnFilterAll.Text = isEn ? "All" : "Tümü";
+        BtnFilterSights.Text = isEn ? "Attractions" : "Gezilecek";
+        BtnFilterMuseums.Text = isEn ? "Museums" : "Müzeler";
+
+        if (_city == "Tüm Türkiye" || _city == "All Turkey")
+        {
+            PageTitleLabel.Text = isEn ? "📍 All Turkey Sights & Museums" : "📍 Tüm Türkiye Gezilecek Yerler & Müzeler";
+            PageSubtitleLabel.Text = isEn 
+                ? "Historical monuments, ancient ruins, canyons & museums" 
+                : "Tarihi yapılar, açık hava müzeleri ve eşsiz doğal güzellikler";
+        }
+        else
+        {
+            PageTitleLabel.Text = isEn ? $"📍 {_city} Attractions & Museums" : $"📍 {_city} Gezilecek Yerler & Müzeler";
+            PageSubtitleLabel.Text = isEn 
+                ? $"Top curated sights, nature parks & ruins in {_city}" 
+                : $"{_city} ilimizin en popüler tarihi ve doğal güzellikleri";
+        }
     }
 
     private void LoadPlaces()
     {
-        var places = _placesService.GetPlaces(_city, _currentCategory);
+        // Normalize category if English was chosen
+        string searchCategory = _currentCategory;
+        if (_currentCategory == "All" || _currentCategory == "Tümü") searchCategory = "Tümü";
+        else if (_currentCategory == "Attractions" || _currentCategory == "Sights") searchCategory = "Gezilecek";
+        else if (_currentCategory == "Museums") searchCategory = "Müzeler";
+
+        var places = _placesService.GetPlaces(_city, searchCategory);
         PlacesCollection.ItemsSource = places;
     }
 
@@ -34,6 +61,14 @@ public partial class PlacesPage : ContentPage
         if (sender is Button btn)
         {
             _currentCategory = btn.Text;
+
+            // Reset styles
+            BtnFilterAll.BackgroundColor = Color.FromArgb("#1E2330");
+            BtnFilterSights.BackgroundColor = Color.FromArgb("#1E2330");
+            BtnFilterMuseums.BackgroundColor = Color.FromArgb("#1E2330");
+
+            btn.BackgroundColor = Color.FromArgb("#FF7F00");
+
             LoadPlaces();
         }
     }
@@ -50,7 +85,10 @@ public partial class PlacesPage : ContentPage
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Bilgi", $"Harita açılamadı: {ex.Message}", "Tamam");
+                await DisplayAlert(
+                    LocalizationService.IsEnglish ? "Info" : "Bilgi", 
+                    LocalizationService.IsEnglish ? $"Could not open map: {ex.Message}" : $"Harita açılamadı: {ex.Message}", 
+                    LocalizationService.IsEnglish ? "OK" : "Tamam");
             }
         }
     }
