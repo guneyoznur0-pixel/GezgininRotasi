@@ -6,7 +6,6 @@ namespace GezginRotası2;
 
 public class GeminiService
 {
-    private const string ApiKey = "AQ.Ab8RN6LV_CkNuRZfhiCQLQ1f54N0rn4Affj9O8KgNOPwfhhNDw";
     private readonly HttpClient _httpClient = new();
 
     private static string GetSystemPrompt()
@@ -29,6 +28,15 @@ public class GeminiService
 
     public async Task<string> AskTravelGuideAsync(string userMessage, string selectedCity = "")
     {
+        string apiKey = ApiConfig.GeminiApiKey;
+
+        if (string.IsNullOrWhiteSpace(apiKey) || apiKey.Contains("YOUR_GEMINI_API_KEY"))
+        {
+            return LocalizationService.IsEnglish
+                ? "⚠️ Gemini API key is not configured. Please set the GEMINI_API_KEY environment variable or save your key in app preferences."
+                : "⚠️ Gemini API anahtarı tanımlanmamış. Lütfen GEMINI_API_KEY ortam değişkenini veya uygulama ayarlarını kontrol edin.";
+        }
+
         string promptPrefix = LocalizationService.IsEnglish ? "[City: " : "[Şehir: ";
         string promptSuffix = LocalizationService.IsEnglish ? "] Query: " : "] Soru: ";
 
@@ -57,7 +65,7 @@ public class GeminiService
 
         try
         {
-            string apiUrl = $"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key={ApiKey}";
+            string apiUrl = $"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key={apiKey}";
 
             var response = await _httpClient.PostAsync(apiUrl, jsonContent);
             var responseJson = await response.Content.ReadAsStringAsync();

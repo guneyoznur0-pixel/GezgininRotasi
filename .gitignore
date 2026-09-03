@@ -18,3 +18,10 @@ Thumbs.db
 *.aab
 *.ipa
 *.app
+
+# Secrets & API Keys
+*Secrets.cs
+*secrets.json
+appsettings.json
+appsettings.*.json
+.env
